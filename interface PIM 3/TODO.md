@@ -1,0 +1,1 @@
+# TODO: Centralizar Cabeçalho\n\n- [x] Editar pim3.css para adicionar centralização\n- [x] Editar pim3.html para remover link desnecessário\n- [x] Testar no navegador\n- [x] Concluir tarefa\n\n✅ Tarefa concluída!
