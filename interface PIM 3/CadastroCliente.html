@@ -32,4 +32,57 @@
             <div><button class="botao" type="submit">Entrar</button></div>
             <br>
     </section>
+    
+    <!-- Modal de Erro -->
+    <div id="error-modal" class="modal-erro">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Erro de Login</h3>
+            <p>Preencha CPF e Senha!</p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnSubmit = document.querySelector('.botao[type="submit"]');
+            const inputs = document.querySelectorAll('.campoDeEscrita input');
+            const modal = document.getElementById('error-modal');
+            const closeBtn = document.querySelector('.close');
+            
+            btnSubmit.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                let hasEmpty = false;
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        hasEmpty = true;
+                        input.style.borderColor = 'rgb(255, 100, 100)';
+                        input.style.boxShadow = '0 0 0 3px rgba(255, 100, 100, 0.3)';
+                    } else {
+                        input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                        input.style.boxShadow = 'none';
+                    }
+                });
+                
+                if (hasEmpty) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    alert('Login realizado com sucesso!'); // Placeholder sucesso
+                }
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
 </body>
