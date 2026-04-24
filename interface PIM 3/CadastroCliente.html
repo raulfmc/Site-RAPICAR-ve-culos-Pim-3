@@ -16,11 +16,6 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <section class="login">
          <div class="texto"><h2>Login Funcionario</h2></div>
             <div class="texto">CPF</div>
@@ -64,12 +59,14 @@
                     }
                 });
                 
-                if (hasEmpty) {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    alert('Login realizado com sucesso!'); // Placeholder sucesso
-                }
+                    if (hasEmpty) {
+                        modal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        alert('Cadastro realizado com sucesso!');
+                        
+                        window.location.href = "pim3.html";
+                    }
             });
             
             closeBtn.addEventListener('click', function() {
