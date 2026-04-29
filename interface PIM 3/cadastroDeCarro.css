@@ -104,7 +104,38 @@ header:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 10px 30px rgba(66, 128, 210, 0.6);
 }
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 20vh;
+ 
 
+}
+
+#arquivo {
+  display: none; /* ESCONDE o input feio */
+}
+
+.botao-upload {
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.botao-upload:hover {
+  background: #0056b3;
+}
+
+#nomeArquivo {
+
+  font-size: 14px;
+  color: white;
+}
 @media (max-width: 768px) {
   .login {
     padding: 40px 30px;
