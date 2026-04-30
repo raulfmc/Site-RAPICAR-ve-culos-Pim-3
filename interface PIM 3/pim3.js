@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 3, marca: 'Ford', modelo: 'Fiesta', cor: 'Prata', placa: 'GHI-9012' },
         { id: 4, marca: 'Toyota', modelo: 'Corolla', cor: 'Preto', placa: 'JKL-3456' },
         { id: 5, marca: 'Honda', modelo: 'Civic', cor: 'Vermelho', placa: 'MNO-7891' },
-        { id: 6, marca: 'Honda', modelo: 'City', cor: 'Vermelho', placa: 'MNO-7892' },
-        { id: 7, marca: 'Honda', modelo: 'acord', cor: 'Vermelho', placa: 'MNO-7893' },
     ];
 
     // Inicializa a tabela de carros visível
