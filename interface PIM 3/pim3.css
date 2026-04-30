@@ -90,7 +90,7 @@ aside{
 .tabela-carros table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: rgb(81, 104, 253);
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -104,7 +104,7 @@ aside{
 
 .tabela-carros th {
   background: linear-gradient(135deg, rgb(38, 121, 222), rgb(66, 128, 210));
-  color: white;
+  color: rgb(255, 255, 255);
   font-weight: 600;
 }
 
@@ -135,11 +135,21 @@ aside{
     max-width: 100%;
     max-height: 100%;
 }
+.container_botões {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  justify-content: center;
+  max-width: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
 .botao, .botao2 {
   background: linear-gradient(135deg, rgb(66, 128, 210), rgb(38, 121, 222));
   color: white;
   border: none;
-  padding: 12px 24px;
+  min-width: 150px;
+  padding: 12px 20px;
   border-radius: 12px;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
@@ -147,14 +157,13 @@ aside{
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(66, 128, 210, 0.4);
-  width: 100%;
   margin: 10px 0;
 }
 
-.botao:hover, .botao2:hover {
+/* .botao:hover, .botao2:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(66, 128, 210, 0.6);
-}
+} */
 
 #secao-clientes input {
   background: rgba(255, 255, 255, 0.9);
@@ -175,17 +184,11 @@ footer {
   background: rgba(38, 121, 222, 0.1);
 }
 
-.container_botões {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  justify-content: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
+
 
 @media (max-width: 768px) {
   .container_botões {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
   }
 }

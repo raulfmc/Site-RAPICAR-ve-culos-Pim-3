@@ -4,10 +4,10 @@
     <title>AUTO LOCADORA RAPICAR</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pim3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pim3.css">
     <script src="pim3.js" defer></script>
 </head>
 <body>
@@ -22,11 +22,26 @@
             <div id="container-selecao-cliente">
                 <button class="botao" id="btn-abrir-lista">Escolher cliente</button>
             </div>
-            <br>
+            
+            <div class="campoDeEscrita"><h4 class="texto">Veículo</h4></div>
+            <div id="container-selecao-carro">
+                <button class="botao" id="btn-abrir-lista-carros">Escolher veículo</button>
+            </div>
         </aside>
+        
         <section class="tabela-carros">
-            <table>
-                <tr><td></td></tr>
+            <table id="tabela-veiculos">
+                <thead>
+                    <tr class="texto">
+                        <th>ID</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Cor</th>
+                        <th>Placa</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela-carros">
+                </tbody>
             </table>
         </section>
     </main>
@@ -46,25 +61,41 @@
             </tbody>
         </table>
     </section>
+    <section id="secao-carros" style="display: none; padding: 20px;">
+        <h2 class="texto">Selecione o Veículo</h2>
+        <input type="text" id="input-busca-carro" placeholder="Pesquisar por modelo ou placa..." 
+               style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
+        <table class="tabela-carros" style="width: 100%; cursor: pointer;">
+            <thead>
+                <tr class="texto">
+                    <th>Marca/Modelo</th>
+                    <th>Cor</th>
+                    <th>Placa</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela-selecao-carros">
+            </tbody>
+        </table>
+    </section>
     <br>
 
     <footer>
         <div class="container_botões">
 
-            <button  class="botao2" onclick="window.location.href=tabelaCliente.html">
+            <button class="botao2" onclick="window.location.href='tabelaCliente.html'">
             Tabela de Clientes
             </button>
 
-            <button  class="botao2" onclick="window.location">
-            Cadastrar novo carro
-            </button>
-
-            <button  class="botao2" onclick="window.location.href='CadastroCliente.html'">
+            <button class="botao2" onclick="window.location.href='CadastroCliente.html'">
             Cadastrar novo Cliente
             </button>
 
-            <button  class="botao2" onclick="window.location.href='CadastroDeCarro.html'">
+            <button class="botao2" onclick="window.location.href='CadastroDeCarro.html'">
             Cadastrar novo Carro
+            </button>
+
+            <button class="botao2" onclick="window.location.href='cadastroFuncionario.html'">
+            Cadastro de Funcionario
             </button>
 
             <div></div>

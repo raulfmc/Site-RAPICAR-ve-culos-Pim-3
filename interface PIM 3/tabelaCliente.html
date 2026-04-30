@@ -4,19 +4,43 @@
     <title>AUTO LOCADORA RAPICAR</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="cadastroFuncionario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tabelaCliente.css">
+    <script src="tabelaCliente.js" defer></script>
 </head>
 <body>
-     <header>
+    <header>
         <div class="titulo"><h1> BEM VINDO A RAPICAR VEICULOS </h1></div>
     </header>
-    <section>
+    
+    <section class="tabela-container">
+        <h2 class="texto">Tabela de Clientes</h2>
+        <input type="text" id="input-busca-cliente" placeholder="Pesquisar por nome ou ID..." 
+               style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
+        
         <table class="tabela">
-            oi
-            
+            <thead>
+                <tr class="texto">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela-clientes">
+                <!-- Dados serão inseridos via JavaScript -->
+            </tbody>
         </table>
     </section>
+    
+    <footer>
+        <div class="container_botoes">
+            <button class="botao" onclick="window.location.href='pim3.html'">Voltar ao Início</button>
+        </div>
+    </footer>
 </body>
+</html>
