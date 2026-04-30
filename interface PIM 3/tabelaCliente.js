@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para renderizar a tabela de clientes
     function renderizarTabelaClientes(dados) {
         corpoTabelaClientes.innerHTML = "";
-        
+
         if (dados.length === 0) {
             const tr = document.createElement('tr');
             tr.innerHTML = `<td colspan="5" style="text-align: center; padding: 20px; color: #fff;">Nenhum cliente encontrado</td>`;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.className = 'linha-cliente';
             tr.style.cursor = 'pointer';
             tr.style.transition = 'background-color 0.3s ease';
-            
+
             tr.innerHTML = `
                 <td class="texto">${cliente.id}</td>
                 <td class="texto">${cliente.nome}</td>
@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.linha-cliente').forEach(linha => {
                     linha.style.backgroundColor = 'transparent';
                 });
-                
+
                 // Destaca a linha selecionada
                 tr.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                
+
                 // Exibe alerta com informações do cliente
                 alert(`Cliente selecionado:\n\nID: ${cliente.id}\nNome: ${cliente.nome}\nCPF: ${cliente.cpf}\nTelefone: ${cliente.telefone}\nEmail: ${cliente.email}`);
             });
@@ -72,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função de busca/filtro
     inputBuscaCliente.addEventListener('input', () => {
         const termoBusca = inputBuscaCliente.value.toLowerCase();
-        
-        const filtrados = listaClientesGlobal.filter(cliente => 
-            cliente.nome.toLowerCase().includes(termoBusca) || 
+
+        const filtrados = listaClientesGlobal.filter(cliente =>
+            cliente.nome.toLowerCase().includes(termoBusca) ||
             cliente.id.toString().includes(termoBusca) ||
             cliente.cpf.includes(termoBusca) ||
             cliente.email.toLowerCase().includes(termoBusca)
         );
-        
+
         renderizarTabelaClientes(filtrados);
     });
 });

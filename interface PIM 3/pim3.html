@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <title>AUTO LOCADORA RAPICAR</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="pim3.css">
     <script src="pim3.js" defer></script>
 </head>
+
 <body>
     <header>
-        <div><h1 class="texto">RAPICAR VEICULOS</h1></div>
+        <div>
+            <h1 class="texto">RAPICAR VEICULOS</h1>
+        </div>
     </header>
 
     <main class="grid-container">
         <aside class="tabelaCadastro">
-            <div class="campoDeEscrita"><h2 class="texto">Aluguel</h2></div>
-            <div class="campoDeEscrita"><h4 class="texto">Cliente</h4></div>
+            <div class="campoDeEscrita">
+                <h2 class="texto">Aluguel</h2>
+            </div>
+            <div class="campoDeEscrita">
+                <h4 class="texto">Cliente</h4>
+            </div>
             <div id="container-selecao-cliente">
                 <button class="botao" id="btn-abrir-lista">Escolher cliente</button>
             </div>
-            
-            <div class="campoDeEscrita"><h4 class="texto">Veículo</h4></div>
+
+            <div class="campoDeEscrita">
+                <h4 class="texto">Veículo</h4>
+            </div>
             <div id="container-selecao-carro">
                 <button class="botao" id="btn-abrir-lista-carros">Escolher veículo</button>
             </div>
         </aside>
-        
+
         <section class="tabela-carros">
             <table id="tabela-veiculos">
                 <thead>
@@ -48,8 +59,8 @@
 
     <section id="secao-clientes" style="display: none; padding: 20px;">
         <h2 class="texto">Selecione o Cliente</h2>
-        <input type="text" id="input-busca-cliente" placeholder="Pesquisar por nome ou ID..." 
-               style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
+        <input type="text" id="input-busca-cliente" placeholder="Pesquisar por nome ou ID..."
+            style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
         <table class="tabela-carros" style="width: 100%; cursor: pointer;">
             <thead>
                 <tr class="texto">
@@ -63,8 +74,8 @@
     </section>
     <section id="secao-carros" style="display: none; padding: 20px;">
         <h2 class="texto">Selecione o Veículo</h2>
-        <input type="text" id="input-busca-carro" placeholder="Pesquisar por modelo ou placa..." 
-               style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
+        <input type="text" id="input-busca-carro" placeholder="Pesquisar por modelo ou placa..."
+            style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
         <table class="tabela-carros" style="width: 100%; cursor: pointer;">
             <thead>
                 <tr class="texto">
@@ -83,19 +94,19 @@
         <div class="container_botões">
 
             <button class="botao2" onclick="window.location.href='tabelaCliente.html'">
-            Tabela de Clientes
+                Tabela de Clientes
             </button>
 
             <button class="botao2" onclick="window.location.href='CadastroCliente.html'">
-            Cadastrar novo Cliente
+                Cadastrar novo Cliente
             </button>
 
             <button class="botao2" onclick="window.location.href='CadastroDeCarro.html'">
-            Cadastrar novo Carro
+                Cadastrar novo Carro
             </button>
 
             <button class="botao2" onclick="window.location.href='cadastroFuncionario.html'">
-            Cadastro de Funcionario
+                Cadastro de Funcionario
             </button>
 
             <div></div>
@@ -103,4 +114,5 @@
     </footer>
     <script></script>
 </body>
+
 </html>

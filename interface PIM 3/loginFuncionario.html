@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <title>AUTO LOCADORA RAPICAR</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="loginFuncionario.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="loginFuncionario.css">
 </head>
+
 <body>
-     <header>
-        <div class="titulo"><h1> BEM VINDO A RAPICAR VEICULOS </h1></div>
+    <header>
+        <div class="titulo">
+            <h1> BEM VINDO A RAPICAR VEICULOS </h1>
+        </div>
     </header>
     <br>
     <br>
     <br>
     <section class="login">
-         <div class="texto"><h2>Login Funcionario</h2></div>
-            <div class="texto">CPF</div>
-            <div class="campoDeEscrita"><input type="text" name="nome" class="campoDeEscrita"></div>
-            <br>
-            <div class="texto">SENHA</div>
-            <div class="campoDeEscrita"><input type="text" name="rg"  class="campoDeEscrita"></div>
-            <br>
-            <div><button class="botao" type="submit">Entrar</button></div>
-            <br>
+        <div class="texto">
+            <h2>Login Funcionario</h2>
+        </div>
+        <div class="texto">CPF</div>
+        <div class="campoDeEscrita"><input type="text" name="nome" class="campoDeEscrita"></div>
+        <br>
+        <div class="texto">SENHA</div>
+        <div class="campoDeEscrita"><input type="password" name="rg" class="campoDeEscrita"></div>
+        <br>
+        <div><button class="botao" type="submit">Entrar</button></div>
+        <br>
     </section>
-    
+
     <!-- Modal de Erro -->
     <div id="error-modal" class="modal-erro">
         <div class="modal-content">
@@ -36,17 +43,17 @@
             <p>Preencha CPF e Senha!</p>
         </div>
     </div>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const btnSubmit = document.querySelector('.botao[type="submit"]');
             const inputs = document.querySelectorAll('.campoDeEscrita input');
             const modal = document.getElementById('error-modal');
             const closeBtn = document.querySelector('.close');
-            
-            btnSubmit.addEventListener('click', function(e) {
+
+            btnSubmit.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 let hasEmpty = false;
                 inputs.forEach(input => {
                     if (!input.value.trim()) {
@@ -58,23 +65,23 @@
                         input.style.boxShadow = 'none';
                     }
                 });
-                
-                    if (hasEmpty) {
-                        modal.style.display = 'flex';
-                        document.body.style.overflow = 'hidden';
-                    } else {
-                        alert('login validado com sucesso!');
-                        
-                        window.location.href = "pim3.html";
-                    }
+
+                if (hasEmpty) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    alert('login validado com sucesso!');
+
+                    window.location.href = "pim3.html";
+                }
             });
-            
-            closeBtn.addEventListener('click', function() {
+
+            closeBtn.addEventListener('click', function () {
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             });
-            
-            window.addEventListener('click', function(e) {
+
+            window.addEventListener('click', function (e) {
                 if (e.target === modal) {
                     modal.style.display = 'none';
                     document.body.style.overflow = 'auto';

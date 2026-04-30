@@ -5,6 +5,7 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, rgb(108, 173, 226) 0%, rgb(38, 121, 222) 100%);
@@ -15,6 +16,7 @@ body {
   align-items: center;
   padding: 20px;
 }
+
 header {
   display: flex;
   flex-direction: column;
@@ -41,6 +43,7 @@ header:hover {
   font-size: clamp(1.2rem, 3vw, 2rem);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 .login {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
@@ -57,6 +60,7 @@ header:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 50px rgba(38, 121, 222, 0.4);
 }
+
 .texto {
   color: aliceblue;
   font-family: 'Poppins', sans-serif;
@@ -64,9 +68,11 @@ header:hover {
   margin: 20px 0 10px;
   font-size: clamp(1rem, 2vw, 1.2rem);
 }
-.titulo{
-    margin: 5px;
+
+.titulo {
+  margin: 5px;
 }
+
 .campoDeEscrita input {
   width: 100%;
   padding: 15px;
@@ -85,6 +91,7 @@ header:hover {
   box-shadow: 0 0 0 3px rgba(66, 128, 210, 0.2);
   transform: scale(1.02);
 }
+
 .botao {
   background: linear-gradient(135deg, rgb(66, 128, 210), rgb(38, 121, 222));
   color: white;
@@ -109,7 +116,7 @@ header:hover {
   .login {
     padding: 40px 30px;
   }
-  
+
   .campoDeEscrita input {
     padding: 12px;
   }
@@ -173,16 +180,22 @@ header:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { 
+  from {
     transform: scale(0.7) translateY(-50px);
     opacity: 0;
   }
-  to { 
+
+  to {
     transform: scale(1) translateY(0);
     opacity: 1;
   }

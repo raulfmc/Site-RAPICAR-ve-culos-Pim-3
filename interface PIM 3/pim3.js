@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             tr.className = 'linha-cliente';
             const idNomeFormatado = `${cliente.id} - ${cliente.nome}`;
-            
+
             tr.innerHTML = `
                 <td class="texto">${idNomeFormatado}</td>
                 <td class="texto">${cliente.cpf}</td>
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dados.forEach(carro => {
             const tr = document.createElement('tr');
             const modeloFormatado = `${carro.marca} ${carro.modelo}`;
-            
+
             tr.innerHTML = `
                 <td class="texto">${modeloFormatado}</td>
                 <td class="texto">${carro.cor}</td>
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     inputBuscaCliente.addEventListener('input', () => {
         const termoBusca = inputBuscaCliente.value.toLowerCase();
-        const filtrados = listaClientesGlobal.filter(c => 
-            c.nome.toLowerCase().includes(termoBusca) || 
+        const filtrados = listaClientesGlobal.filter(c =>
+            c.nome.toLowerCase().includes(termoBusca) ||
             c.id.toString().includes(termoBusca)
         );
         renderizarTabelaClientes(filtrados);
@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     inputBuscaCarro.addEventListener('input', () => {
         const termoBusca = inputBuscaCarro.value.toLowerCase();
-        const filtrados = listaCarrosGlobal.filter(c => 
-            c.marca.toLowerCase().includes(termoBusca) || 
+        const filtrados = listaCarrosGlobal.filter(c =>
+            c.marca.toLowerCase().includes(termoBusca) ||
             c.modelo.toLowerCase().includes(termoBusca) ||
             c.placa.toLowerCase().includes(termoBusca)
         );
