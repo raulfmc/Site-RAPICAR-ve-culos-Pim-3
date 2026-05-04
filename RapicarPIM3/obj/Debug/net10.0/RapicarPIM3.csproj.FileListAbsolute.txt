@@ -1,0 +1,8 @@
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.csproj.AssemblyReference.cache
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.AssemblyInfoInputs.cache
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.AssemblyInfo.cs
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.csproj.CoreCompileInputs.cache
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\muril\Desktop\Estudos\Prog\C#\RapicarPIM3\obj\Debug\net10.0\RapicarPIM3.MvcApplicationPartsAssemblyInfo.cache
