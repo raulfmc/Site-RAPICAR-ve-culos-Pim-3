@@ -194,15 +194,27 @@ footer {
 }
 
 /* Responsividade */
+/* Ajustes de responsividade */
 @media (max-width: 768px) {
   .tabela-container {
     padding: 20px;
   }
 
+  /* Evita quebra/estouro do conteúdo */
   .tabela th,
   .tabela td {
-    padding: 10px;
-    font-size: 0.9rem;
+    padding: 10px 8px;
+    font-size: 0.88rem;
+    vertical-align: top;
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  /* Mantém a coluna de Status/ações mais estreita */
+  .tabela td:last-child,
+  .tabela th:last-child {
+    width: 1%;
+    white-space: nowrap;
   }
 
   .container_botoes {
@@ -216,9 +228,17 @@ footer {
     padding: 15px 10px;
   }
 
+  .tabela {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .tabela th,
   .tabela td {
-    padding: 8px;
+    padding: 8px 6px;
     font-size: 0.8rem;
+    word-break: break-word;
   }
 }
+

@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elementos do DOM
     const inputBuscaCliente = document.getElementById('input-busca-cliente');
     const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
 
-    // Dados mock de clientes
+    // Mock (pode depois virar do backend)
     let listaClientesGlobal = [
         { id: 1, nome: 'João Silva', cpf: '123.456.789-00', telefone: '(11) 99999-1111', email: 'joao@email.com' },
         { id: 2, nome: 'Maria Santos', cpf: '987.654.321-00', telefone: '(11) 99999-2222', email: 'maria@email.com' },
@@ -15,30 +14,59 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 8, nome: 'Fernanda Lima', cpf: '999.888.777-66', telefone: '(11) 99999-8888', email: 'fernanda@email.com' }
     ];
 
-    // Renderiza a tabela de clientes inicialmente
-    renderizarTabelaClientes(listaClientesGlobal);
+    const STORAGE_KEY = 'rapicar_pendencias_v1';
 
-    // Função para renderizar a tabela de clientes
+    function carregarEstado() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return { clientes: {}, alugueis: [], dividas: [] };
+            return JSON.parse(raw);
+        } catch (e) {
+            return { clientes: {}, alugueis: [], dividas: [] };
+        }
+    }
+
+    // Status: automático com base nas dividas cadastradas no localStorage.
+    // Se existir pelo menos 1 dívida para o cliente -> devendo.
+    function calcularStatusFinanceiro(clienteId, estado) {
+        const dividas = (estado.dividas || []).filter(d => d.clienteId === clienteId);
+        const isDevendo = dividas.length > 0;
+        return isDevendo ? { label: 'Devendo', color: '#ef4444' } : { label: 'Em dia', color: '#22c55e' };
+    }
+
+    function abrirStatusCliente(clienteId) {
+        // Passa o cliente via sessionStorage (não deixa depender de querystring)
+        sessionStorage.setItem('rapicar_status_cliente_id', String(clienteId));
+        window.location.href = 'statusCliente.html';
+    }
+
+    function criarIndicadorStatus({ label, color }) {
+        return `
+            <span style="display:inline-block; padding:10px 18px; border-radius:12px; font-family:Poppins, sans-serif; font-weight:600; background:${color}; color:#fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.15);">
+                ${label}
+            </span>
+        `;
+    }
+
     function renderizarTabelaClientes(dados) {
-        corpoTabelaClientes.innerHTML = "";
+        corpoTabelaClientes.innerHTML = '';
 
-        if (dados.length === 0) {
+        if (!dados || dados.length === 0) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="6" style="text-align: center; padding: 20px; color: #fff;">Nenhum cliente encontrado</td>`;
+            tr.innerHTML = `<td colspan="6" style="text-align:center; padding:20px; color:#fff;">Nenhum cliente encontrado</td>`;
             corpoTabelaClientes.appendChild(tr);
-
             return;
         }
+
+        const estado = carregarEstado();
 
         dados.forEach(cliente => {
             const tr = document.createElement('tr');
             tr.className = 'linha-cliente';
-            tr.style.cursor = 'pointer';
             tr.style.transition = 'background-color 0.3s ease';
 
-            // status do cliente (mock): se id for par -> em dia, se ímpar -> devendo
-            // (ajuste aqui depois se você tiver um campo real no backend)
-            const statusEmDia = (cliente.id % 2 === 0);
+            const status = calcularStatusFinanceiro(cliente.id, estado);
+
             tr.innerHTML = `
                 <td class="texto">${cliente.id}</td>
                 <td class="texto">${cliente.nome}</td>
@@ -46,17 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="texto">${cliente.telefone}</td>
                 <td class="texto">${cliente.email}</td>
                 <td>
-                    <button
-                        type="button"
-                        class="toggle-status-cliente"
-                        aria-pressed="${statusEmDia ? 'true' : 'false'}"
-                        title="Alternar status do cliente"
-                    >${statusEmDia ? 'Em dia' : 'Devendo'}</button>
+                    <div style="display:flex; gap:10px; align-items:center; justify-content:flex-end;">
+                        <button
+                            type="button"
+                            class="botao-status-cliente"
+                            title="Ver status"
+                            style="padding:10px 14px; border-radius:12px; border:none; cursor:pointer; background:rgba(255,255,255,0.12); color:#fff; font-family:Poppins, sans-serif; font-weight:600;">
+                            Status
+                        </button>
+                        ${criarIndicadorStatus(status)}
+                    </div>
                 </td>
             `;
 
-
-            // Efeito hover
             tr.addEventListener('mouseenter', () => {
                 tr.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
             });
@@ -64,70 +94,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.style.backgroundColor = 'transparent';
             });
 
-            // Clique para selecionar o cliente
-            tr.addEventListener('click', () => {
-                // Remove seleção anterior
-                document.querySelectorAll('.linha-cliente').forEach(linha => {
-                    linha.style.backgroundColor = 'transparent';
-                });
-
-                // Destaca a linha selecionada
-                tr.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-
-                // Exibe alerta com informações do cliente
-                alert(`Cliente selecionado:\n\nID: ${cliente.id}\nNome: ${cliente.nome}\nCPF: ${cliente.cpf}\nTelefone: ${cliente.telefone}\nEmail: ${cliente.email}`);
-            });
-
-            // Botão de status (dia/devendo)
-            const btnStatus = tr.querySelector('.toggle-status-cliente');
-
-            function aplicarEstadoCliente(statusAtual) {
-                const emDia = !!statusAtual;
-                btnStatus.style.backgroundColor = emDia ? '#22c55e' : '#ef4444';
-                btnStatus.style.color = '#fff';
-                btnStatus.style.border = 'none';
-                btnStatus.style.padding = '10px 18px';
-                btnStatus.style.borderRadius = '12px';
-                btnStatus.style.fontFamily = 'Poppins, sans-serif';
-                btnStatus.style.fontWeight = '600';
-                btnStatus.style.cursor = 'pointer';
-                btnStatus.style.boxShadow = emDia
-                    ? '0 0 0 3px rgba(34, 197, 94, 0.25)'
-                    : '0 0 0 3px rgba(239, 68, 68, 0.25)';
-
-                btnStatus.textContent = emDia ? 'Em dia' : 'Devendo';
-                btnStatus.setAttribute('aria-pressed', emDia ? 'true' : 'false');
-            }
-
-            aplicarEstadoCliente(statusEmDia);
-
+            const btnStatus = tr.querySelector('.botao-status-cliente');
             btnStatus.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // alterna
-                cliente.__statusEmDia = !cliente.__statusEmDia;
-                // se não existir ainda, usa statusEmDia inicial
-                if (typeof cliente.__statusEmDia !== 'boolean') {
-                    cliente.__statusEmDia = !statusEmDia;
-                }
-                aplicarEstadoCliente(cliente.__statusEmDia);
+                abrirStatusCliente(cliente.id);
             });
 
             corpoTabelaClientes.appendChild(tr);
         });
     }
 
+    // Busca
+    if (inputBuscaCliente) {
+        inputBuscaCliente.addEventListener('input', () => {
+            const termoBusca = inputBuscaCliente.value.toLowerCase().trim();
 
-    // Função de busca/filtro
-    inputBuscaCliente.addEventListener('input', () => {
-        const termoBusca = inputBuscaCliente.value.toLowerCase();
+            const filtrados = listaClientesGlobal.filter(cliente => {
+                if (!termoBusca) return true;
+                return (
+                    cliente.nome.toLowerCase().includes(termoBusca) ||
+                    String(cliente.id).includes(termoBusca) ||
+                    (cliente.cpf || '').includes(termoBusca) ||
+                    (cliente.email || '').toLowerCase().includes(termoBusca)
+                );
+            });
 
-        const filtrados = listaClientesGlobal.filter(cliente =>
-            cliente.nome.toLowerCase().includes(termoBusca) ||
-            cliente.id.toString().includes(termoBusca) ||
-            cliente.cpf.includes(termoBusca) ||
-            cliente.email.toLowerCase().includes(termoBusca)
-        );
+            renderizarTabelaClientes(filtrados);
+        });
+    }
 
-        renderizarTabelaClientes(filtrados);
-    });
+    renderizarTabelaClientes(listaClientesGlobal);
 });
+

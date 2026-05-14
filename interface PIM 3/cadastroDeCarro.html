@@ -18,63 +18,44 @@
             <h1> BEM VINDO A RAPICAR VEICULOS </h1>
         </div>
     </header>
+
     <br>
     <br>
     <br>
+
     <section class="login">
-<<<<<<< HEAD
-         <div class="texto"><h2>Cadastro de Carro</h2></div>
-            <div class="texto">Marca</div>
-            <div class="campoDeEscrita"><input type="text" name="nome" class="campoDeEscrita"></div>
-            <br>
-            <div class="texto">Modelo</div>
-            <div class="campoDeEscrita"><input type="text" name="rg"  class="campoDeEscrita"></div> 
-            <br>          
-            <div class="texto">Cor</div>
-            <div class="campoDeEscrita"><input type="text" name="rg"  class="campoDeEscrita"></div>
-            <br>
-            <div class="texto">Placa</div>
-            <div class="campoDeEscrita"><input type="text" name="rg"  class="campoDeEscrita"></div>
-            <br> 
-            <div class="texto">Nº Do chasi</div>
-            <div class="campoDeEscrita"><input type="text" name="rg"  class="campoDeEscrita"></div>
-            <br>
-            <br>                  
-            <div><button class="botao" type="submit">Cadastrar</button></div>
-            <br>
-=======
         <div class="texto">
             <h2>Cadastro de Carro</h2>
         </div>
+
         <div class="texto">Marca</div>
-        <div class="campoDeEscrita"><input type="text" name="nome" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="marca" class="campoDeEscrita"></div>
         <br>
+
         <div class="texto">Modelo</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="modelo" class="campoDeEscrita"></div>
         <br>
+
         <div class="texto">Cor</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="cor" class="campoDeEscrita"></div>
         <br>
+
         <div class="texto">Placa</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="placa" class="campoDeEscrita"></div>
         <br>
-        <div class="texto">Nº Do chasi</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" class="campoDeEscrita"></div>
+
+        <div class="texto">Nº do chassi</div>
+        <div class="campoDeEscrita"><input type="text" name="numeroChassi" class="campoDeEscrita"></div>
         <br>
-        <div class="texto">Imagem Carro</div>
-        <div class="upload-box">
-            <input type="file" id="arquivo" accept="image/*">
-            <label for="arquivo" class="botao-upload">
-                Selecionar imagem
-            </label>
-            <span id="nomeArquivo">VAZIO</span>
-        </div>
+
+        <div class="texto">valor da diaria</div>
+        <div class="campoDeEscrita"><input type="text" name="ValorDaDiaria" class="campoDeEscrita"></div>
         <br>
         <br>
         <div><button class="botao" type="submit">Cadastrar</button></div>
         <br>
->>>>>>> a20bc14762e770d3ba5ce26a08e69073a5a94bce
     </section>
+
     <div id="error-modal" class="modal-erro">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -90,35 +71,38 @@
             const modal = document.getElementById('error-modal');
             const closeBtn = document.querySelector('.close');
 
-            btnSubmit.addEventListener('click', function (e) {
-                e.preventDefault();
+            if (btnSubmit) {
+                btnSubmit.addEventListener('click', function (e) {
+                    e.preventDefault();
 
-                let hasEmpty = false;
-                inputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        hasEmpty = true;
-                        input.style.borderColor = 'rgb(255, 100, 100)';
-                        input.style.boxShadow = '0 0 0 3px rgba(255, 100, 100, 0.3)';
+                    let hasEmpty = false;
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            hasEmpty = true;
+                            input.style.borderColor = 'rgb(255, 100, 100)';
+                            input.style.boxShadow = '0 0 0 3px rgba(255, 100, 100, 0.3)';
+                        } else {
+                            input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                            input.style.boxShadow = 'none';
+                        }
+                    });
+
+                    if (hasEmpty) {
+                        modal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
                     } else {
-                        input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                        input.style.boxShadow = 'none';
+                        alert('Cadastro realizado com sucesso!');
+                        window.location.href = "pim3.html";
                     }
                 });
+            }
 
-                if (hasEmpty) {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    alert('Cadastro realizado com sucesso!');
-
-                    window.location.href = "pim3.html";
-                }
-            });
-
-            closeBtn.addEventListener('click', function () {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            }
 
             window.addEventListener('click', function (e) {
                 if (e.target === modal) {
@@ -129,3 +113,6 @@
         });
     </script>
 </body>
+
+</html>
+

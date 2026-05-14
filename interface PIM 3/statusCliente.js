@@ -31,9 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calcularStatusFinanceiro(clienteId, estado) {
     const dividas = contarDividas(clienteId, estado);
-    // em dia se não tiver dívida
-    return dividas.length > 0;
+    // Regra: se existir ao menos uma dívida cujo ultimoDia já passou => Devendo.
+    // Caso contrário => Em dia.
+    const hoje = new Date().toISOString().slice(0, 10);
+
+    const devendo = (dividas || []).some(d => {
+      if (!d.ultimoDia) return true;
+      return String(d.ultimoDia) < hoje;
+    });
+
+    return devendo;
   }
+
 
   function renderizarClientes() {
     const estado = carregarEstado();
