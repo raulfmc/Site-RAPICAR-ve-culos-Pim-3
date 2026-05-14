@@ -11,9 +11,9 @@ namespace RapicarPIM3.Data
 
         }
 
-        public DbSet<Carro> Carros { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Divida> Dividas { get; set; }
-        public DbSet<Manutencao> Manutencoes { get; set; }
+        public DbSet<Carro> Carro { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Divida> Divida { get; set; }
+        public DbSet<Manutencao> Manutencao { get; set; }
     }
 }

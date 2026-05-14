@@ -1,5 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
-using ApiContatos10.Data;
+using RapicarPIM3.Data;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
