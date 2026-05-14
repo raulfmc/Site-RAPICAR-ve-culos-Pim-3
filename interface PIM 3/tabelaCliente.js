@@ -36,13 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.style.cursor = 'pointer';
             tr.style.transition = 'background-color 0.3s ease';
 
-<<<<<<< HEAD
             // status do cliente (mock): se id for par -> em dia, se ímpar -> devendo
             // (ajuste aqui depois se você tiver um campo real no backend)
             const statusEmDia = (cliente.id % 2 === 0);
-
-=======
->>>>>>> a20bc14762e770d3ba5ce26a08e69073a5a94bce
             tr.innerHTML = `
                 <td class="texto">${cliente.id}</td>
                 <td class="texto">${cliente.nome}</td>

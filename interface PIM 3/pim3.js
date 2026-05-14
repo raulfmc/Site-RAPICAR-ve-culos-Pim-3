@@ -143,12 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tr.addEventListener('click', () => {
                 containerSelecaoCliente.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${idNomeFormatado}</span>`;
-                secaoClientes.style.display = 'none';
+            secaoClientes.style.display = 'none';
             });
 
             corpoTabelaClientes.appendChild(tr);
         });
     }
+
 
     // --- FUNÇÕES DE CARROS ---
     function renderizarTabelaCarros(dados) {
