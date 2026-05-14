@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (dados.length === 0) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="5" style="text-align: center; padding: 20px; color: #fff;">Nenhum cliente encontrado</td>`;
+            tr.innerHTML = `<td colspan="6" style="text-align: center; padding: 20px; color: #fff;">Nenhum cliente encontrado</td>`;
             corpoTabelaClientes.appendChild(tr);
+
             return;
         }
 
@@ -34,14 +35,27 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.className = 'linha-cliente';
             tr.style.cursor = 'pointer';
             tr.style.transition = 'background-color 0.3s ease';
-            
+
+            // status do cliente (mock): se id for par -> em dia, se ímpar -> devendo
+            // (ajuste aqui depois se você tiver um campo real no backend)
+            const statusEmDia = (cliente.id % 2 === 0);
+
             tr.innerHTML = `
                 <td class="texto">${cliente.id}</td>
                 <td class="texto">${cliente.nome}</td>
                 <td class="texto">${cliente.cpf}</td>
                 <td class="texto">${cliente.telefone}</td>
                 <td class="texto">${cliente.email}</td>
+                <td>
+                    <button
+                        type="button"
+                        class="toggle-status-cliente"
+                        aria-pressed="${statusEmDia ? 'true' : 'false'}"
+                        title="Alternar status do cliente"
+                    >${statusEmDia ? 'Em dia' : 'Devendo'}</button>
+                </td>
             `;
+
 
             // Efeito hover
             tr.addEventListener('mouseenter', () => {
@@ -65,9 +79,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Cliente selecionado:\n\nID: ${cliente.id}\nNome: ${cliente.nome}\nCPF: ${cliente.cpf}\nTelefone: ${cliente.telefone}\nEmail: ${cliente.email}`);
             });
 
+            // Botão de status (dia/devendo)
+            const btnStatus = tr.querySelector('.toggle-status-cliente');
+
+            function aplicarEstadoCliente(statusAtual) {
+                const emDia = !!statusAtual;
+                btnStatus.style.backgroundColor = emDia ? '#22c55e' : '#ef4444';
+                btnStatus.style.color = '#fff';
+                btnStatus.style.border = 'none';
+                btnStatus.style.padding = '10px 18px';
+                btnStatus.style.borderRadius = '12px';
+                btnStatus.style.fontFamily = 'Poppins, sans-serif';
+                btnStatus.style.fontWeight = '600';
+                btnStatus.style.cursor = 'pointer';
+                btnStatus.style.boxShadow = emDia
+                    ? '0 0 0 3px rgba(34, 197, 94, 0.25)'
+                    : '0 0 0 3px rgba(239, 68, 68, 0.25)';
+
+                btnStatus.textContent = emDia ? 'Em dia' : 'Devendo';
+                btnStatus.setAttribute('aria-pressed', emDia ? 'true' : 'false');
+            }
+
+            aplicarEstadoCliente(statusEmDia);
+
+            btnStatus.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // alterna
+                cliente.__statusEmDia = !cliente.__statusEmDia;
+                // se não existir ainda, usa statusEmDia inicial
+                if (typeof cliente.__statusEmDia !== 'boolean') {
+                    cliente.__statusEmDia = !statusEmDia;
+                }
+                aplicarEstadoCliente(cliente.__statusEmDia);
+            });
+
             corpoTabelaClientes.appendChild(tr);
         });
     }
+
 
     // Função de busca/filtro
     inputBuscaCliente.addEventListener('input', () => {

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>AUTO LOCADORA RAPICAR</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="statusCliente.css">
+    <script src="statusCliente.js" defer></script>
+
+</head>
+<body>
+    <header>
+        <div class="titulo"><h1> CONTROLE DE DÍVIDAS - CLIENTES </h1></div>
+    </header>
+
+    <div></div>
+
+    <section class="tabela-container" style="max-width: 1100px;">
+        <h2 class="texto">Selecione um cliente</h2>
+        <input type="text" id="input-busca-status" placeholder="Pesquisar por nome ou ID...">
+
+        <table class="tabela">
+            <thead>
+                <tr class="texto">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-status-clientes">
+                <!-- Dados via JS -->
+            </tbody>
+        </table>
+
+        <div style="height: 20px;"></div>
+
+        <h2 class="texto" id="titulo-dividas">Dívidas do cliente</h2>
+
+        <table class="tabela">
+            <thead>
+                <tr class="texto">
+                    <th>Valor</th>
+                    <th>Data criação</th>
+                    <th>Primeiro dia aluguel</th>
+                    <th>Último dia aluguel</th>
+                    <th>Tempo / Atraso</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-dividas">
+                <tr>
+                    <td colspan="6" style="text-align:center; padding:20px; color:#fff;">Selecione um cliente acima.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <div class="container_botoes">
+            <button class="botao" onclick="window.location.href='pim3.html'">Voltar ao Início</button>
+        </div>
+    </footer>
+</body>
+</html>
+
