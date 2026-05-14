@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             tr.className = 'linha-cliente';
             const idNomeFormatado = `${cliente.id} - ${cliente.nome}`;
-            
+
             tr.innerHTML = `
                 <td class="texto">${idNomeFormatado}</td>
                 <td class="texto">${cliente.cpf}</td>
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dados.forEach(carro => {
             const tr = document.createElement('tr');
             const modeloFormatado = `${carro.marca} ${carro.modelo}`;
-            
+
             tr.innerHTML = `
                 <td class="texto">${modeloFormatado}</td>
                 <td class="texto">${carro.cor}</td>
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const termoBusca = inputBuscaCliente.value.toLowerCase();
         const disponiveis = obterClientesDisponiveisParaSelecao();
         const filtrados = disponiveis.filter(c => 
-            c.nome.toLowerCase().includes(termoBusca) || 
+            c.nome.toLowerCase().includes(termoBusca) ||
             c.id.toString().includes(termoBusca)
         );
         renderizarTabelaClientes(filtrados);
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const carro = getCarroSelecionado();
 
         if (!primeiroDia || !ultimoDia || !carro) {
-            // não sobrescreve o texto se ainda não tem valores suficientes.
+            // só atualiza quando tiver seleção completa
             return;
         }
 
@@ -355,8 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     inputBuscaCarro.addEventListener('input', () => {
         const termoBusca = inputBuscaCarro.value.toLowerCase();
-        const filtrados = listaCarrosGlobal.filter(c => 
-            c.marca.toLowerCase().includes(termoBusca) || 
+        const filtrados = listaCarrosGlobal.filter(c =>
+            c.marca.toLowerCase().includes(termoBusca) ||
             c.modelo.toLowerCase().includes(termoBusca) ||
             c.placa.toLowerCase().includes(termoBusca)
         );

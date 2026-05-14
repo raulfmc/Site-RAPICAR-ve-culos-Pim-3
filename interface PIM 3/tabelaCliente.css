@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,6 +5,7 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, rgb(108, 173, 226) 0%, rgb(38, 121, 222) 100%);
@@ -16,6 +16,7 @@ body {
   align-items: center;
   padding: 20px;
 }
+
 header {
   display: flex;
   flex-direction: column;
@@ -171,16 +172,22 @@ footer {
 
 /* Animações */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { 
+  from {
     transform: scale(0.7) translateY(-50px);
     opacity: 0;
   }
-  to { 
+
+  to {
     transform: scale(1) translateY(0);
     opacity: 1;
   }
@@ -191,12 +198,13 @@ footer {
   .tabela-container {
     padding: 20px;
   }
-  
-  .tabela th, .tabela td {
+
+  .tabela th,
+  .tabela td {
     padding: 10px;
     font-size: 0.9rem;
   }
-  
+
   .container_botoes {
     flex-direction: column;
     align-items: center;
@@ -207,8 +215,9 @@ footer {
   .tabela-container {
     padding: 15px 10px;
   }
-  
-  .tabela th, .tabela td {
+
+  .tabela th,
+  .tabela td {
     padding: 8px;
     font-size: 0.8rem;
   }
