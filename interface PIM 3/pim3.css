@@ -89,7 +89,8 @@ aside {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   overflow: auto;
-  max-height: 500px;
+  max-height: 800px;
+  max-width: 1100px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
@@ -172,12 +173,45 @@ aside {
   margin: 10px 0;
 }
 
-/* .botao:hover, .botao2:hover {
+.botao:hover, .botao2:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(66, 128, 210, 0.6);
-} */
+}
+
+/* Botão "Escolher" na tabela de carros */
+.botao-carro {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgb(66, 128, 210), rgb(38, 121, 222));
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(66, 128, 210, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.botao-carro:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(66, 128, 210, 0.55);
+  filter: brightness(1.05);
+}
+
+.botao-carro:active {
+  transform: translateY(0);
+}
+
+.tabela-carros th:last-child,
+.tabela-carros td:last-child {
+  width: 120px;
+  text-align: center;
+}
 
 #secao-clientes input {
+
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid rgba(66, 128, 210, 0.5);
   border-radius: 10px;
