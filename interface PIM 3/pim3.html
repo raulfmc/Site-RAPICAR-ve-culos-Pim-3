@@ -54,7 +54,7 @@
                     <div id="resumo-valor-total" class="texto" style="color: aliceblue; font-size: 1.1rem; font-weight: 600; text-shadow:none;">Valor total: R$ 0,00</div>
                 </div>
 
-                <button class="botao" id="btn-cotar">concluir</button>
+                <button class="botao" id="btn-cotar">concluir</button> 
             </div>
 
         </aside>
@@ -93,7 +93,7 @@
         </table>
     </section>
     <section id="secao-carros" style="display: none; padding: 20px;">
-        <h2 class="texto">Selecione o Veículo</h2>
+        <h2 class="texto">Selecione o Veículo (opcional)</h2>
         <input type="text" id="input-busca-carro" placeholder="Pesquisar por modelo ou placa..."
             style="width: 100%; margin-bottom: 15px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: sans-serif;">
         <table class="tabela-carros" style="width: 100%; cursor: pointer;">
@@ -104,10 +104,10 @@
                     <th>Placa</th>
                 </tr>
             </thead>
-            <tbody id="corpo-tabela-selecao-carros">
-            </tbody>
+            <tbody id="corpo-tabela-selecao-carros"></tbody>
         </table>
     </section>
+
     <br>
 
     <footer>
@@ -123,6 +123,10 @@
 
             <button class="botao2" onclick="window.location.href='CadastroDeCarro.html'">
                 Cadastrar novo Carro
+            </button>
+
+            <button class="botao2" onclick="window.location.href='dashboardLucro.html'">
+                Dashboard de Lucro
             </button>
 
             <button class="botao2" onclick="window.location.href='TabelaCarros.html'">

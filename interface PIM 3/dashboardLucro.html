@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Financeira - RAPICAR</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="dashboardLucro.css" />
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script src="dashboardLucro.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__title">
+        <h1>Dashboard Financeira</h1>
+        <p>Rendimento, ocupação e ranking de veículos</p>
+      </div>
+      <div class="header__meta" id="header-meta">
+        <span class="pill" id="pill-scope">Geral do sistema</span>
+        <span class="pill pill--ghost" id="pill-period">Período: —</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Barra superior: filtros de veículos (obrigatório no topo) -->
+    <section class="topFilter" aria-label="Filtros de veículos">
+      <div class="topFilter__row">
+        <div class="topFilter__field">
+          <label class="label" for="filtro-veiculo">Pesquisa por nome do carro</label>
+          <input
+            id="filtro-veiculo"
+            type="text"
+            placeholder="Ex: Gol, Volkswagen, ABC-1234..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="topFilter__field">
+          <label class="label" for="filtro-modelo">Modelo</label>
+          <select id="filtro-modelo">
+            <option value="">Todos</option>
+          </select>
+        </div>
+
+        <div class="topFilter__field">
+          <label class="label" for="filtro-placa">Placa</label>
+          <select id="filtro-placa">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <div class="topFilter__field">
+          <label class="label" for="filtro-categoria">Categoria</label>
+          <select id="filtro-categoria">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <div class="topFilter__actions">
+          <button class="btnClear" id="btn-limpar-filtros" type="button">Limpar</button>
+        </div>
+      </div>
+
+      <div class="topFilter__meta">
+        <span class="pill" id="pill-scope-inline">Geral do sistema</span>
+        <span class="pill pill--ghost" id="pill-period-inline">Período: —</span>
+      </div>
+    </section>
+
+    <!-- Linha 1/2: Cards resumo (compacto e mais horizontal) -->
+    <section class="cards" aria-label="Resumo financeiro">
+
+      <article class="card card--metric" data-metric="faturamentoHoje">
+        <div class="metric__icon metric__icon--blue">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Faturamento hoje</div>
+          <div class="metric__value" id="m-faturamento-hoje">R$ 0,00</div>
+          <div class="metric__delta" id="m-faturamento-hoje-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="faturamentoMes">
+        <div class="metric__icon metric__icon--gold">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Faturamento do mês</div>
+          <div class="metric__value" id="m-faturamento-mes">R$ 0,00</div>
+          <div class="metric__delta" id="m-faturamento-mes-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="faturamentoAno">
+        <div class="metric__icon metric__icon--gold2">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Faturamento do ano</div>
+          <div class="metric__value" id="m-faturamento-ano">R$ 0,00</div>
+          <div class="metric__delta" id="m-faturamento-ano-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="totalLocacoes">
+        <div class="metric__icon metric__icon--green">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Total de locações</div>
+          <div class="metric__value" id="m-total-locacoes">0</div>
+          <div class="metric__delta" id="m-total-locacoes-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="veiculosAlugados">
+        <div class="metric__icon metric__icon--blue2">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Veículos alugados agora</div>
+          <div class="metric__value" id="m-veiculos-alugados">0</div>
+          <div class="metric__delta" id="m-veiculos-alugados-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="veiculosDisponiveis">
+        <div class="metric__icon metric__icon--gray">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Veículos disponíveis</div>
+          <div class="metric__value" id="m-veiculos-disponiveis">0</div>
+          <div class="metric__delta" id="m-veiculos-disponiveis-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="taxaOcupacao">
+        <div class="metric__icon metric__icon--green2">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Taxa de ocupação</div>
+          <div class="metric__value" id="m-taxa-ocupacao">0%</div>
+          <div class="metric__delta" id="m-taxa-ocupacao-delta">—</div>
+        </div>
+      </article>
+
+      <article class="card card--metric" data-metric="ticketMedio">
+        <div class="metric__icon metric__icon--gold3">⬤</div>
+        <div class="metric__body">
+          <div class="metric__label">Ticket médio por locação</div>
+          <div class="metric__value" id="m-ticket-medio">R$ 0,00</div>
+          <div class="metric__delta" id="m-ticket-medio-delta">—</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Grid principal (organizado em linhas para evitar página longa) -->
+    <section class="grid">
+      <!-- Linha 1/2: gráficos (diário/mensal/anual lado a lado) -->
+      <div class="panel panel--charts" style="grid-column: 1 / -1;">
+
+        <div class="panel__head">
+          <h2>Rendimento</h2>
+          <div class="panel__subtitle" id="sub-rendimento">—</div>
+        </div>
+
+      <div class="chartGrid chartGrid--three">
+          <div class="chartCard">
+
+            <div class="chartCard__head">
+              <h3>Rendimento diário</h3>
+              <div class="chartCard__hint">Valor arrecadado + locações</div>
+            </div>
+            <div class="chartWrap"><canvas id="chart-diario" height="120"></canvas></div>
+          </div>
+
+          <div class="chartCard">
+            <div class="chartCard__head">
+              <h3>Rendimento mensal</h3>
+              <div class="chartCard__hint">Acumulado + comparação</div>
+            </div>
+            <div class="chartWrap"><canvas id="chart-mensal" height="120"></canvas></div>
+          </div>
+
+          <div class="chartCard">
+            <div class="chartCard__head">
+              <h3>Rendimento anual</h3>
+              <div class="chartCard__hint">Crescimento + tendência</div>
+            </div>
+            <div class="chartWrap"><canvas id="chart-anual" height="120"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: filtros + métricas adicionais -->
+      <aside class="panel panel--filters">
+        <div class="panel__head">
+          <h2>Filtro por veículo</h2>
+          <div class="panel__subtitle">Sem seleção mostra o sistema inteiro</div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="filtro-veiculo">
+            Buscar por nome, modelo, placa ou categoria
+          </label>
+          <input
+            id="filtro-veiculo"
+            type="text"
+            placeholder="Ex: Gol, Volkswagen, ABC-1234, Econômico..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="field">
+          <label class="label" for="filtro-carro-selecionado">Selecionar</label>
+          <select id="filtro-carro-selecionado">
+            <option value="">Todos os veículos (geral)</option>
+          </select>
+        </div>
+
+        <div class="miniMetrics">
+          <div class="miniMetric">
+            <div class="miniMetric__label">Quantidade de locações</div>
+            <div class="miniMetric__value" id="mm-total-locacoes">0</div>
+          </div>
+
+          <div class="miniMetric">
+            <div class="miniMetric__label">Dias alugado</div>
+            <div class="miniMetric__value" id="mm-dias-alugado">0</div>
+          </div>
+
+          <div class="miniMetric">
+            <div class="miniMetric__label">Dias parado</div>
+            <div class="miniMetric__value" id="mm-dias-parado">0</div>
+          </div>
+
+          <div class="miniMetric">
+            <div class="miniMetric__label">Lucro acumulado (estimado)</div>
+            <div class="miniMetric__value" id="mm-lucro-acumulado">R$ 0,00</div>
+          </div>
+
+          <div class="miniMetric">
+            <div class="miniMetric__label">Média de diária</div>
+            <div class="miniMetric__value" id="mm-media-diaria">R$ 0,00</div>
+          </div>
+
+          <div class="miniMetric">
+            <div class="miniMetric__label">Taxa de utilização</div>
+            <div class="miniMetric__value" id="mm-taxa-utilizacao">0%</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="chartCard chartCard--small">
+          <div class="chartCard__head">
+            <h3>Ocupação (alugados vs disponíveis)</h3>
+            <div class="chartCard__hint">Donut</div>
+          </div>
+          <div class="chartWrap"><canvas id="chart-ocupacao" height="140"></canvas></div>
+        </div>
+
+        <div class="chartCard chartCard--small">
+          <div class="chartCard__head">
+            <h3>Participação na receita</h3>
+            <div class="chartCard__hint">Top veículos</div>
+          </div>
+          <div class="chartWrap"><canvas id="chart-participacao" height="140"></canvas></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Bottom: ranking / complementares -->
+    <section class="bottomGrid">
+      <div class="panel">
+        <div class="panel__head">
+          <h2>Ranking de veículos</h2>
+          <div class="panel__subtitle">Mais rentáveis e menos rentáveis</div>
+        </div>
+        <div class="rankGrid">
+          <div class="rankCard">
+            <h3>Mais rentáveis</h3>
+            <ol class="rankList" id="rank-top"></ol>
+          </div>
+
+          <div class="rankCard">
+            <h3>Menos rentáveis</h3>
+            <ol class="rankList" id="rank-bottom"></ol>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="chartWrap chartWrap--tall"><canvas id="chart-ranking" height="180"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head">
+          <h2>Resumo de histórico</h2>
+          <div class="panel__subtitle">Tendências e indicadores</div>
+        </div>
+
+        <div class="history">
+          <div class="history__item">
+            <div class="history__label">Crescimento financeiro</div>
+            <div class="history__value" id="hist-crescimento">—</div>
+          </div>
+          <div class="history__item">
+            <div class="history__label">Comparação com período anterior</div>
+            <div class="history__value" id="hist-comparacao">—</div>
+          </div>
+          <div class="history__item">
+            <div class="history__label">Ticket médio</div>
+            <div class="history__value" id="hist-ticket">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="chartWrap chartWrap--tall"><canvas id="chart-locacoes" height="180"></canvas></div>
+
+        <div class="emptyHint" id="empty-hint">
+          Nenhuma base financeira encontrada. Gere um aluguel com atraso em <b>pim3.html</b> para alimentar os gráficos.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container_botoes">
+      <button class="botao" onclick="window.location.href='pim3.html'">Voltar ao Início</button>
+      <button class="botao" onclick="window.location.href='TabelaCarros.html'">Tabela de Carros</button>
+    </div>
+  </footer>
+</body>
+</html>
+

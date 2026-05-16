@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         salvarEstado(estado);
     }
 
-    function registrarDividaAtraso({ clienteId, aluguelId, primeiroDia, ultimoDia }) {
+    function registrarDividaAtraso({ clienteId, carroId, aluguelId, primeiroDia, ultimoDia }) {
         const estado = carregarEstado();
         const dividasCliente = (estado.dividas || []).filter(d => d.clienteId === clienteId);
         if (dividasCliente.length >= 3) return; // limite máximo
@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const novaDivida = {
             id: 'd_' + Math.random().toString(16).slice(2),
             clienteId,
+            carroId: carroId ?? null,
             aluguelId,
             valor: 100, // fictício
             dataCriacao: hojeISO(),
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             atrasoDias: atrasoEmDias,
             status: atrasoEmDias > 0 ? 'Vencido' : 'Próximo do vencimento'
         };
+
 
         estado.dividas = estado.dividas || [];
         estado.dividas.push(novaDivida);
@@ -163,10 +165,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="texto">${carro.cor}</td>
                 <td class="texto">${carro.placa}</td>
                 <td class="texto">R$ ${Number(carro.diaria || 0).toFixed(2).replace('.', ',')}</td>
+                <td>
+                    <button type="button" class="botao-carro" data-carro-id="${carro.id}">
+                        Escolher
+                    </button>
+                </td>
             `;
+
+            tr.querySelector('.botao-carro')?.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+
+                containerSelecaoCarro.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${carro.marca} ${carro.modelo} - ${carro.placa} | Diária: R$ ${Number(carro.diaria || 0).toFixed(2).replace('.', ',')}</span>`;
+                secaoCarros.style.display = 'none';
+
+                // recalcular total e mostrar valor total e diária imediatamente
+                recalcularValorTotal();
+            });
+
             corpoTabelaCarros.appendChild(tr);
         });
     }
+
 
 
     function renderizarTabelaSelecaoCarros(dados) {
@@ -217,11 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarTabelaClientes(filtrados);
     });
 
+    // No pim3.js, o veículo deve ser escolhido direto na tabela principal ao lado,
+    // sem abrir a seção de seleção (secao-carros).
+    // Mantemos o botão "Escolher veículo" caso exista, mas agora ele só faz scroll.
     btnAbrirListaCarros.addEventListener('click', () => {
-        secaoCarros.style.display = 'block';
-        secaoCarros.scrollIntoView({ behavior: 'smooth' });
-        renderizarTabelaSelecaoCarros(listaCarrosGlobal);
+        secaoCarros.style.display = 'none';
+        if (corpoTabelaCarros) {
+            corpoTabelaCarros.closest('section')?.scrollIntoView({ behavior: 'smooth' });
+        }
     });
+
 
     // Dados de aluguel (primeiro/último dia) - fictício
     const inputPrimeiroDia = document.getElementById('primeiro-dia-aluguel');
@@ -337,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const aluguelId = 'al_' + Math.random().toString(16).slice(2);
                 registrarDividaAtraso({
                     clienteId,
+                    carroId: getCarroSelecionado()?.id,
                     aluguelId,
                     primeiroDia,
                     ultimoDia
