@@ -1,36 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Elementos do cliente
-    const btnAbrirLista = document.getElementById('btn-abrir-lista');
-    const secaoClientes = document.getElementById('secao-clientes');
-    const containerSelecaoCliente = document.getElementById('container-selecao-cliente');
-    const inputBuscaCliente = document.getElementById('input-busca-cliente');
-    const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
+document.addEventListener('DOMContentLoaded', async () => {
+   await carregarCarros();
+   await carregarClientes();
 
-    // Elementos do carro
-    const btnAbrirListaCarros = document.getElementById('btn-abrir-lista-carros');
-    const secaoCarros = document.getElementById('secao-carros');
-    const containerSelecaoCarro = document.getElementById('container-selecao-carro');
-    const inputBuscaCarro = document.getElementById('input-busca-carro');
-    const corpoTabelaSelecaoCarros = document.getElementById('corpo-tabela-selecao-carros');
-    const corpoTabelaCarros = document.getElementById('corpo-tabela-carros');
+    async function carregarCarros() {
+        try {
+            const resposta = await fetch('http://localhost:5067/api/Carro');
+
+            if (!resposta.ok) {
+                throw new Error(`Erro HTTP: ${resposta.status}`);
+            }
+
+            // Converte o JSON recebido em array JavaScript
+            listaCarrosGlobal = await resposta.json();
+
+            console.log('Carros recebidos da API:', listaCarrosGlobal);
+
+            // Exibe os carros na tabela
+            renderizarTabelaCarros(listaCarrosGlobal);
+        }
+        catch (erro) {
+            console.error('Erro ao carregar carros:', erro);
+        }
+    }
+    async function carregarClientes() {
+        try {
+            const resposta = await fetch('http://localhost:5067/api/Cliente');
+
+            if (!resposta.ok) {
+                throw new Error(`Erro HTTP: ${resposta.status}`);
+            }
+
+            // Converte o JSON recebido em array JavaScript
+            listaClientesGlobal = await resposta.json();
+
+            console.log('Clientes recebidos da API:', listaClientesGlobal);
+
+            
+            renderizarTabelaCarros(listaClientesGlobal);
+        }
+        catch (erro) {
+            console.error('Erro ao carregar clientes:', erro);
+        }
+    }
 
     // Dados mock de clientes
-    let listaClientesGlobal = [
-        { id: 1, nome: 'João Silva', cpf: '123.456.789-00' },
-        { id: 2, nome: 'Maria Santos', cpf: '987.654.321-00' },
-        { id: 3, nome: 'Pedro Oliveira', cpf: '456.789.123-00' },
-        { id: 4, nome: 'Ana Costa', cpf: '321.654.987-00' },
-        { id: 5, nome: 'Carlos Souza', cpf: '789.123.456-00' }
-    ];
-
-    // Dados mock de carros + valor da diária fictício (diferente entre carros, R$90..R$150)
-    let listaCarrosGlobal = [
-        { id: 1, marca: 'Volkswagen', modelo: 'Gol', cor: 'Preto', placa: 'ABC-1234', diaria: 95 },
-        { id: 2, marca: 'Chevrolet', modelo: 'Onix', cor: 'Branco', placa: 'DEF-5678', diaria: 110 },
-        { id: 3, marca: 'Ford', modelo: 'Fiesta', cor: 'Prata', placa: 'GHI-9012', diaria: 125 },
-        { id: 4, marca: 'Toyota', modelo: 'Corolla', cor: 'Preto', placa: 'JKL-3456', diaria: 145 },
-        { id: 5, marca: 'Honda', modelo: 'Civic', cor: 'Vermelho', placa: 'MNO-7891', diaria: 100 },
-    ];
+    
 
 
     // Inicializa a tabela de carros visível
@@ -65,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function garantirClientesNoStorage() {
         const estado = carregarEstado();
         listaClientesGlobal.forEach(c => {
-            if (!estado.clientes[c.id]) {
-                estado.clientes[c.id] = { bloqueado: false };
+            if (!estado.clientes[c.cliente_ID]) {
+                estado.clientes[c.cliente_ID] = { bloqueado: false };
             }
         });
         salvarEstado(estado);
@@ -77,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calcularStatusCliente(estado, clienteId) {
-        const dividas = (estado.dividas || []).filter(d => d.clienteId === clienteId);
+        const dividas = (estado.dividas || []).filter(d => d.cliente_ID === clienteId);
         // regra: se houver pelo menos uma dívida -> Devendo
         return dividas.length > 0;
     }
@@ -89,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const qtd = contarDividasPorCliente(estado, c.id);
 
             // bloqueia quando chegar em 3 dívidas
-            estado.clientes[c.id].bloqueado = qtd >= 3;
+            estado.clientes[c.cliente_ID].bloqueado = qtd >= 3;
             // statusEmDia / devendo é derivado (não precisa armazenar)
         });
         salvarEstado(estado);
@@ -136,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dados.forEach(cliente => {
             const tr = document.createElement('tr');
             tr.className = 'linha-cliente';
-            const idNomeFormatado = `${cliente.id} - ${cliente.nome}`;
+            const idNomeFormatado = `${cliente.cliente_ID} - ${cliente.cliente_Nome}`;
 
             tr.innerHTML = `
                 <td class="texto">${idNomeFormatado}</td>
@@ -159,14 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
         dados.forEach(carro => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="texto">${carro.id}</td>
-                <td class="texto">${carro.marca}</td>
-                <td class="texto">${carro.modelo}</td>
-                <td class="texto">${carro.cor}</td>
-                <td class="texto">${carro.placa}</td>
-                <td class="texto">R$ ${Number(carro.diaria || 0).toFixed(2).replace('.', ',')}</td>
+                <td class="texto">${carro.carro_ID}</td>
+                <td class="texto">${carro.carro_Marca}</td>
+                <td class="texto">${carro.carro_Modelo}</td>
+                <td class="texto">${carro.carro_Cor}</td>
+                <td class="texto">${carro.carro_Placa}</td>
+                <td class="texto">R$ ${Number(carro.carro_Valor_Diária || 0).toFixed(2).replace('.', ',')}</td>
                 <td>
-                    <button type="button" class="botao-carro" data-carro-id="${carro.id}">
+                    <button type="button" class="botao-carro" data-carro-id="${carro.carro_ID}">
                         Escolher
                     </button>
                 </td>
@@ -175,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.querySelector('.botao-carro')?.addEventListener('click', (ev) => {
                 ev.stopPropagation();
 
-                containerSelecaoCarro.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${carro.marca} ${carro.modelo} - ${carro.placa} | Diária: R$ ${Number(carro.diaria || 0).toFixed(2).replace('.', ',')}</span>`;
+                containerSelecaoCarro.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${carro.carro_Marca} ${carro.carro_Modelo} - ${carro.carro_Placa} | Diária: R$ ${Number(carro.carro_Valor_Diária || 0).toFixed(2).replace('.', ',')}</span>`;
                 secaoCarros.style.display = 'none';
 
                 // recalcular total e mostrar valor total e diária imediatamente
@@ -192,16 +206,16 @@ document.addEventListener('DOMContentLoaded', () => {
         corpoTabelaSelecaoCarros.innerHTML = "";
         dados.forEach(carro => {
             const tr = document.createElement('tr');
-            const modeloFormatado = `${carro.marca} ${carro.modelo}`;
+            const modeloFormatado = `${carro.carro_Marca} ${carro.carro_Modelo}`;
 
             tr.innerHTML = `
                 <td class="texto">${modeloFormatado}</td>
-                <td class="texto">${carro.cor}</td>
-                <td class="texto">${carro.placa}</td>
+                <td class="texto">${carro.carro_Cor}</td>
+                <td class="texto">${carro.carro_Placa}</td>
             `;
 
             tr.addEventListener('click', () => {
-                containerSelecaoCarro.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${modeloFormatado} - ${carro.placa} | Diária: R$ ${Number(carro.diaria || 0).toFixed(2).replace('.', ',')}</span>`;
+                containerSelecaoCarro.innerHTML = `<span class="texto" style="font-weight: bold; color: #fff;">${modeloFormatado} - ${carro.placa} | Diária: R$ ${Number(carro.carro_Valor_Diária || 0).toFixed(2).replace('.', ',')}</span>`;
 
             secaoCarros.style.display = 'none';
             // recalcular total e mostrar valor total e diária imediatamente
@@ -217,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function obterClientesDisponiveisParaSelecao() {
         const estado = carregarEstado();
-        return listaClientesGlobal.filter(c => !estado.clientes[c.id]?.bloqueado);
+        return listaClientesGlobal.filter(c => !estado.clientes[c.cliente_ID]?.bloqueado);
     }
 
     btnAbrirLista.addEventListener('click', () => {
@@ -282,9 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!placa) {
             const matchPlacaFallback = txt.match(/-\s*(.+)$/);
             const placaFallback = matchPlacaFallback ? matchPlacaFallback[1].trim() : null;
-            return listaCarrosGlobal.find(c => c.placa === placaFallback) || null;
+            return listaCarrosGlobal.find(c => c.carro_Placa === placaFallback) || null;
         }
-        return listaCarrosGlobal.find(c => c.placa === placa) || null;
+        return listaCarrosGlobal.find(c => c.carro_Placa === placa) || null;
     }
 
     function diasEntreDatas(primeiroDia, ultimoDia) {
@@ -360,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // aluguelId fictício (apenas para referenciar)
                 const aluguelId = 'al_' + Math.random().toString(16).slice(2);
                 registrarDividaAtraso({
-                    clienteId,
-                    carroId: getCarroSelecionado()?.id,
+                    cliente_ID,
+                    carroId: getCarroSelecionado()?.carro_ID,
                     aluguelId,
                     primeiroDia,
                     ultimoDia
@@ -382,10 +396,26 @@ document.addEventListener('DOMContentLoaded', () => {
     inputBuscaCarro.addEventListener('input', () => {
         const termoBusca = inputBuscaCarro.value.toLowerCase();
         const filtrados = listaCarrosGlobal.filter(c =>
-            c.marca.toLowerCase().includes(termoBusca) ||
-            c.modelo.toLowerCase().includes(termoBusca) ||
-            c.placa.toLowerCase().includes(termoBusca)
+            c.carro_Marca.toLowerCase().includes(termoBusca) ||
+            c.carro_Modelo.toLowerCase().includes(termoBusca) ||
+            c.carro_Placa.toLowerCase().includes(termoBusca)
         );
         renderizarTabelaSelecaoCarros(filtrados);
     });
 });
+let listaClientesGlobal = [];
+let listaCarrosGlobal = [];
+ // Elementos do cliente
+    const btnAbrirLista = document.getElementById('btn-abrir-lista');
+    const secaoClientes = document.getElementById('secao-clientes');
+    const containerSelecaoCliente = document.getElementById('container-selecao-cliente');
+    const inputBuscaCliente = document.getElementById('input-busca-cliente');
+    const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
+
+    // Elementos do carro
+    const btnAbrirListaCarros = document.getElementById('btn-abrir-lista-carros');
+    const secaoCarros = document.getElementById('secao-carros');
+    const containerSelecaoCarro = document.getElementById('container-selecao-carro');
+    const inputBuscaCarro = document.getElementById('input-busca-carro');
+    const corpoTabelaSelecaoCarros = document.getElementById('corpo-tabela-selecao-carros');
+    const corpoTabelaCarros = document.getElementById('corpo-tabela-carros');

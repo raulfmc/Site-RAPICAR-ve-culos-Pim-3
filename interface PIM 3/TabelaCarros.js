@@ -1,18 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Elementos do DOM
   const inputBuscaCarro = document.getElementById('input-busca-carro');
   const corpoTabelaCarros = document.getElementById('corpo-tabela-carros');
+  await carregarCarros();
+  async function carregarCarros() {
 
+    const resposta = await fetch('http://localhost:5067/api/Carro');
+
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
+
+    // Converte o JSON recebido em array JavaScript
+    listaCarrosGlobal = await resposta.json();
+
+    console.log('Carros recebidos da API:', listaCarrosGlobal);
+
+    // Exibe os carros na tabela
+    renderizarTabelaCarros(listaCarrosGlobal);
+
+
+  }
   if (!inputBuscaCarro || !corpoTabelaCarros) return;
 
   // Dados mock de carros (mesmos campos do pim3.js)
-  let listaCarrosGlobal = [
-    { id: 1, marca: 'Volkswagen', modelo: 'Gol', cor: 'Preto', placa: 'ABC-1234', disponivel: true },
-    { id: 2, marca: 'Chevrolet', modelo: 'Onix', cor: 'Branco', placa: 'DEF-5678', disponivel: false },
-    { id: 3, marca: 'Ford', modelo: 'Fiesta', cor: 'Prata', placa: 'GHI-9012', disponivel: true },
-    { id: 4, marca: 'Toyota', modelo: 'Corolla', cor: 'Preto', placa: 'JKL-3456', disponivel: false },
-    { id: 5, marca: 'Honda', modelo: 'Civic', cor: 'Vermelho', placa: 'MNO-7891', disponivel: true },
-  ];
+  
 
   // Inicializa a tabela
   renderizarTabelaCarros(listaCarrosGlobal);
@@ -34,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.style.transition = 'background-color 0.3s ease';
 
       tr.innerHTML = `
-        <td class="texto">${carro.id}</td>
-        <td class="texto">${carro.marca}</td>
-        <td class="texto">${carro.modelo}</td>
-        <td class="texto">${carro.cor}</td>
-        <td class="texto">${carro.placa}</td>
+        <td class="texto">${carro.carro_ID}</td>
+        <td class="texto">${carro.carro_Marca}</td>
+        <td class="texto">${carro.carro_Modelo}</td>
+        <td class="texto">${carro.carro_Cor}</td>
+        <td class="texto">${carro.carro_Placa}</td>
         <td>
           <button
             type="button"
@@ -89,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Clique (mantém comportamento parecido com tabela de clientes)
       tr.addEventListener('click', () => {
         alert(
-          `Carro selecionado:\n\nID: ${carro.id}\nMarca: ${carro.marca}\nModelo: ${carro.modelo}\nCor: ${carro.cor}\nPlaca: ${carro.placa}`
+          `Carro selecionado:\n\nID: ${carro.carro_ID}\nMarca: ${carro.carro_Marca}\nModelo: ${carro.carro_Modelo}\nCor: ${carro.carro_Cor}\nPlaca: ${carro.carro_Placa}`
         );
       });
 
@@ -103,15 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filtrados = listaCarrosGlobal.filter((carro) => {
       return (
-        carro.id.toString().includes(termoBusca) ||
-        carro.marca.toLowerCase().includes(termoBusca) ||
-        carro.modelo.toLowerCase().includes(termoBusca) ||
-        (carro.cor || '').toLowerCase().includes(termoBusca) ||
-        carro.placa.toLowerCase().includes(termoBusca)
+        carro.carro_ID.toString().includes(termoBusca) ||
+        carro.carro_Marca.toLowerCase().includes(termoBusca) ||
+        carro.carro_Modelo.toLowerCase().includes(termoBusca) ||
+        (carro.carro_Cor || '').toLowerCase().includes(termoBusca) ||
+        carro.carro_Placa.toLowerCase().includes(termoBusca)
       );
     });
 
     renderizarTabelaCarros(filtrados);
   });
 });
-
+let listaCarrosGlobal = [];

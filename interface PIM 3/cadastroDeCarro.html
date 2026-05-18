@@ -29,31 +29,51 @@
         </div>
 
         <div class="texto">Marca</div>
-        <div class="campoDeEscrita"><input type="text" name="marca" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="marca" id=Carro_Marca class="campoDeEscrita"></div>
         <br>
 
         <div class="texto">Modelo</div>
-        <div class="campoDeEscrita"><input type="text" name="modelo" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="modelo" id=Carro_Modelo class="campoDeEscrita"></div>
         <br>
 
-        <div class="texto">Cor</div>
-        <div class="campoDeEscrita"><input type="text" name="cor" class="campoDeEscrita"></div>
+        <div class="texto">Ano de fabricação</div>
+        <div class="campoDeEscrita"><input type="text" name="ano de fabricação" id=Carro_Ano_Fabricação
+                class="campoDeEscrita"></div>
+        <br>
+
+        <div class="texto">Número do chassi</div>
+        <div class="campoDeEscrita"><input type="text" name="número" id=Carro_Número class="campoDeEscrita"></div>
+        <br>
+
+        <div class="texto">Versão</div>
+        <div class="campoDeEscrita"><input type="text" name="versão" id=Carro_Versão class="campoDeEscrita"></div>
+        <br>
+
+        <div class="texto">Câmbio</div>
+        <div class="campoDeEscrita"><input type="text" name="câmbio" id=Carro_Câmbio class="campoDeEscrita"></div>
         <br>
 
         <div class="texto">Placa</div>
-        <div class="campoDeEscrita"><input type="text" name="placa" class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="placa" id=Carro_Placa class="campoDeEscrita"></div>
         <br>
 
-        <div class="texto">Nº do chassi</div>
-        <div class="campoDeEscrita"><input type="text" name="numeroChassi" class="campoDeEscrita"></div>
+        <div class="texto">Cor</div>
+        <div class="campoDeEscrita"><input type="text" name="cor" id=Carro_Cor class="campoDeEscrita"></div>
         <br>
 
-        <div class="texto">valor da diaria</div>
-        <div class="campoDeEscrita"><input type="text" name="ValorDaDiaria" class="campoDeEscrita"></div>
+
+        <div class="texto">Status</div>
+        <div class="campoDeEscrita"><input type="text" name="status" id=Carro_Status class="campoDeEscrita"></div>
+        <br>
+
+
+        <div class="texto">Valor da diária</div>
+        <div class="campoDeEscrita"><input type="text" name="ValorDaDiaria" id=Carro_Valor_Diária
+                class="campoDeEscrita"></div>
         <br>
         <br>
-        <div><button class="botao" type="submit">Cadastrar</button></div>
-        <br>
+        <div><button class="botao" type="button" onclick=criarCarro()>Cadastrar</button></div>
+        <script src="cadastroDeCarro.js"></script>
     </section>
 
     <div id="error-modal" class="modal-erro">
@@ -115,4 +135,3 @@
 </body>
 
 </html>
-

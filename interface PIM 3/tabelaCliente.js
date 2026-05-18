@@ -1,18 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await carregarClientes();
+    await carregarDividas();
     const inputBuscaCliente = document.getElementById('input-busca-cliente');
     const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
 
-    // Mock (pode depois virar do backend)
-    let listaClientesGlobal = [
-        { id: 1, nome: 'João Silva', cpf: '123.456.789-00', telefone: '(11) 99999-1111', email: 'joao@email.com' },
-        { id: 2, nome: 'Maria Santos', cpf: '987.654.321-00', telefone: '(11) 99999-2222', email: 'maria@email.com' },
-        { id: 3, nome: 'Pedro Oliveira', cpf: '456.789.123-00', telefone: '(11) 99999-3333', email: 'pedro@email.com' },
-        { id: 4, nome: 'Ana Costa', cpf: '321.654.987-00', telefone: '(11) 99999-4444', email: 'ana@email.com' },
-        { id: 5, nome: 'Carlos Souza', cpf: '789.123.456-00', telefone: '(11) 99999-5555', email: 'carlos@email.com' },
-        { id: 6, nome: 'Juliana Pereira', cpf: '111.222.333-44', telefone: '(11) 99999-6666', email: 'juliana@email.com' },
-        { id: 7, nome: 'Roberto Alves', cpf: '555.666.777-88', telefone: '(11) 99999-7777', email: 'roberto@email.com' },
-        { id: 8, nome: 'Fernanda Lima', cpf: '999.888.777-66', telefone: '(11) 99999-8888', email: 'fernanda@email.com' }
-    ];
+    async function carregarClientes() {
+
+        const resposta = await fetch('http://localhost:5067/api/Cliente');
+
+        if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+
+        listaClientesGlobal = await resposta.json();
+    }
+    async function carregarDividas() {
+
+        const resposta = await fetch('http://localhost:5067/api/Divida');
+
+        if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+
+        listaDividasGlobal = await resposta.json();
+    }
+
 
     const STORAGE_KEY = 'rapicar_pendencias_v1';
 
@@ -29,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Status: automático com base nas dividas cadastradas no localStorage.
     // Se existir pelo menos 1 dívida para o cliente -> devendo.
     function calcularStatusFinanceiro(clienteId, estado) {
-        const dividas = (estado.dividas || []).filter(d => d.clienteId === clienteId);
+        const dividas = (estado.dividas || []).filter(d => d.cliente_ID === clienteId);
         const isDevendo = dividas.length > 0;
         return isDevendo ? { label: 'Devendo', color: '#ef4444' } : { label: 'Em dia', color: '#22c55e' };
     }
@@ -65,14 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.className = 'linha-cliente';
             tr.style.transition = 'background-color 0.3s ease';
 
-            const status = calcularStatusFinanceiro(cliente.id, estado);
+            const status = calcularStatusFinanceiro(cliente.cliente_ID, estado);
 
             tr.innerHTML = `
-                <td class="texto">${cliente.id}</td>
-                <td class="texto">${cliente.nome}</td>
-                <td class="texto">${cliente.cpf}</td>
-                <td class="texto">${cliente.telefone}</td>
-                <td class="texto">${cliente.email}</td>
+                <td class="texto">${cliente.cliente_ID}</td>
+                <td class="texto">${cliente.cliente_Nome}</td>
+                <td class="texto">${cliente.cliente_CPF}</td>
+                <td class="texto">${cliente.cliente_Telefone}</td>
+                <td class="texto">${cliente.cliente_Email}</td>
                 <td>
                     <div style="display:flex; gap:10px; align-items:center; justify-content:flex-end;">
                         <button
@@ -112,10 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const filtrados = listaClientesGlobal.filter(cliente => {
                 if (!termoBusca) return true;
                 return (
-                    cliente.nome.toLowerCase().includes(termoBusca) ||
-                    String(cliente.id).includes(termoBusca) ||
-                    (cliente.cpf || '').includes(termoBusca) ||
-                    (cliente.email || '').toLowerCase().includes(termoBusca)
+                    cliente.cliente_Nome.toLowerCase().includes(termoBusca) ||
+                    String(cliente.cliente_ID).includes(termoBusca) ||
+                    (cliente.cliente_CPF || '').includes(termoBusca) ||
+                    (cliente.cliente_Email || '').toLowerCase().includes(termoBusca)
                 );
             });
 
@@ -125,4 +139,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderizarTabelaClientes(listaClientesGlobal);
 });
-
+let listaClientesGlobal = [];
