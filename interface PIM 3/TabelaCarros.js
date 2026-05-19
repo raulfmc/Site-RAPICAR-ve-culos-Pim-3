@@ -21,10 +21,59 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   }
+  async function atualizarCarro(id) {
+    const dados = {
+      Carro_Marca: prompt("Nova marca:"),
+      Carro_Modelo: prompt("Novo modelo:")
+    };
+
+    const resposta = await fetch(`http://localhost:5067/api/Carro/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dados)
+    });
+
+    if (resposta.ok) {
+      alert("Carro atualizado com sucesso!");
+      await carregarCarros();
+    } else {
+      alert("Erro ao atualizar.");
+    }
+  }
+
+  async function deletarCarro(id) {
+    const resposta = await fetch(`http://localhost:5067/api/Carro/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dados)
+    });
+
+    if (resposta.ok) {
+      alert("Carro deletado com sucesso!");
+      await carregarCarros();
+    } else {
+      alert("Erro ao deletar.");
+    }
+
+  }
+  function aplicarEstiloBotao(botao, cor) {
+    botao.style.backgroundColor = cor;
+    botao.style.color = '#fff';
+    botao.style.border = 'none';
+    botao.style.padding = '10px 18px';
+    botao.style.borderRadius = '12px';
+    botao.style.fontFamily = 'Poppins, sans-serif';
+    botao.style.fontWeight = '600';
+    botao.style.cursor = 'pointer';
+  }
   if (!inputBuscaCarro || !corpoTabelaCarros) return;
 
-  // Dados mock de carros (mesmos campos do pim3.js)
-  
+
+
 
   // Inicializa a tabela
   renderizarTabelaCarros(listaCarrosGlobal);
@@ -40,57 +89,114 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     dados.forEach((carro) => {
+
       const tr = document.createElement('tr');
       tr.className = 'linha-carro';
       tr.style.cursor = 'pointer';
       tr.style.transition = 'background-color 0.3s ease';
 
       tr.innerHTML = `
-        <td class="texto">${carro.carro_ID}</td>
+        <td class="texto">${carro.carro_ID}</td> 
         <td class="texto">${carro.carro_Marca}</td>
         <td class="texto">${carro.carro_Modelo}</td>
-        <td class="texto">${carro.carro_Cor}</td>
+        <td class="texto">${carro.carro_Ano_Fabricação}</td>
+        <td class="texto">${carro.carro_Número}</td>
+        <td class="texto">${carro.carro_Versão}</td>
+        <td class="texto">${carro.carro_Câmbio}</td>
         <td class="texto">${carro.carro_Placa}</td>
+        <td class="texto">${carro.carro_Cor}</td>
+        <td class="texto">${carro.carro_Qtd_Aluguéis}</td>
+        <td class="texto">R$ ${carro.carro_Valor_Diária}</td>
         <td>
           <button
             type="button"
             class="toggle-disponibilidade"
-            aria-pressed="${carro.disponivel ? 'true' : 'false'}"
+            aria-pressed="${carro.carro_Status ? 'true' : 'false'}"
             title="Alternar disponibilidade"
-          >${carro.disponivel ? 'Disponível' : 'Indisponível'}</button>
+          >${carro.carro_Status ? 'Disponível' : 'Indisponível'}</button>
+        </td>
+        <td>
+          <button class="botao-editar">Editar</button>
+        </td>
+        <td>
+          <button class="botao-deletar">X</button>
         </td>
       `;
+      const btnEditar = tr.querySelector('.botao-editar');
+      aplicarEstiloBotao(
+        btnEditar,
+        '#3b82f6'
+      );
 
+      btnEditar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        atualizarCarro(carro.carro_ID);
+      });
+      const btnDeletar = tr.querySelector('.botao-deletar');
+      aplicarEstiloBotao(btnDeletar, '#ef4444');
+      btnDeletar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const confirmado = confirm(
+          `Deseja realmente excluir o carro?\n\n` +
+          `ID: ${carro.carro_ID}\n` +
+          `Marca: ${carro.carro_Marca}\n` +
+          `Modelo: ${carro.carro_Modelo}\n` +
+          `Placa: ${carro.carro_Placa}`
+        );
+
+        if (!confirmado) {
+          return;
+        }
+
+        deletarCarro(carro.carro_ID);
+        
+      });
       // Botão liga/desliga disponibilidade (verde/vermelho)
       const btnToggle = tr.querySelector('.toggle-disponibilidade');
 
       function aplicarEstadoDisponibilidade() {
-        const disponivel = !!carro.disponivel;
-        btnToggle.style.backgroundColor = disponivel ? '#22c55e' : '#ef4444';
-        btnToggle.style.color = '#fff';
-        btnToggle.style.border = 'none';
-        btnToggle.style.padding = '10px 18px';
-        btnToggle.style.borderRadius = '12px';
-        btnToggle.style.fontFamily = 'Poppins, sans-serif';
-        btnToggle.style.fontWeight = '600';
-        btnToggle.style.cursor = 'pointer';
-        btnToggle.style.boxShadow = disponivel
-          ? '0 0 0 3px rgba(34, 197, 94, 0.25)'
-          : '0 0 0 3px rgba(239, 68, 68, 0.25)';
+        const disponivel = carro.carro_Status;
 
+        btnToggle.textContent = disponivel ? 'Disponível' : 'Indisponível';
+
+        aplicarEstiloBotao(
+          btnToggle,
+          disponivel ? '#22c55e' : '#ef4444'
+        );
         btnToggle.textContent = disponivel ? 'Disponível' : 'Indisponível';
         btnToggle.setAttribute('aria-pressed', disponivel ? 'true' : 'false');
       }
 
       aplicarEstadoDisponibilidade();
 
-      btnToggle.addEventListener('click', (e) => {
+      btnToggle.addEventListener('click', async (e) => {
         e.stopPropagation();
-        carro.disponivel = !carro.disponivel;
+
+        const novoStatus = !carro.carro_Status;
+
+        const resposta = await fetch(
+          `http://localhost:5067/api/Carro/${carro.carro_ID}/status`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(novoStatus)
+          }
+        );
+
+        if (resposta.ok) {
+          carro.carro_Status = novoStatus;
+          aplicarEstadoDisponibilidade();
+        } else {
+          alert('Erro ao atualizar status do carro.');
+        }
+
+
         aplicarEstadoDisponibilidade();
       });
 
-      // Hover
+
       tr.addEventListener('mouseenter', () => {
         tr.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
       });
@@ -98,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         tr.style.backgroundColor = 'transparent';
       });
 
-      // Clique (mantém comportamento parecido com tabela de clientes)
+
       tr.addEventListener('click', () => {
         alert(
           `Carro selecionado:\n\nID: ${carro.carro_ID}\nMarca: ${carro.carro_Marca}\nModelo: ${carro.carro_Modelo}\nCor: ${carro.carro_Cor}\nPlaca: ${carro.carro_Placa}`

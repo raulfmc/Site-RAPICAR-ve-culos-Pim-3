@@ -59,7 +59,7 @@ public class CarroController : ControllerBase
         CarroExistente.Carro_Cor = Carro.Carro_Cor;
         CarroExistente.Carro_Número = Carro.Carro_Número;
         CarroExistente.Carro_Versão = Carro.Carro_Versão;
-        CarroExistente.Carro_Status = Carro.Carro_Status;
+    
         CarroExistente.Carro_Câmbio = Carro.Carro_Câmbio;
         CarroExistente.Carro_Qtd_Aluguéis = Carro.Carro_Qtd_Aluguéis;
         CarroExistente.Carro_Valor_Diária = Carro.Carro_Valor_Diária;
@@ -77,7 +77,7 @@ public class CarroController : ControllerBase
         var carro = await _context.Carro.FindAsync(id);
         if (carro == null)
         {
-            return NotFound(new { mensagem = "carro não encontrado" });
+            return NotFound(new { mensagem = "Carro não encontrado" });
 
         }
         carro.Carro_Ativo = false;
@@ -87,7 +87,7 @@ public class CarroController : ControllerBase
         return Ok(carro);
     }
     [HttpPatch("{id}/status")]
-    public async Task<IActionResult> AtualizarStatus(int id, string novo_status)
+    public async Task<IActionResult> AtualizarStatus(int id, [FromBody] bool novo_status)
     {
        var carro = await _context.Carro.FindAsync(id);
        if (carro == null)
@@ -96,6 +96,7 @@ public class CarroController : ControllerBase
        }
        carro.Carro_Status = novo_status;
        _context.Carro.Update(carro);
+       await _context.SaveChangesAsync();
        return Ok(carro);
     }
   

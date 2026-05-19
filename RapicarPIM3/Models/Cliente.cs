@@ -9,15 +9,15 @@ namespace RapicarPIM3.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Cliente_ID { get; set; }
-        public required string Cliente_Nome {get; set;}
-        public required string Cliente_RG {get;set;}
-        public required string Cliente_Telefone{get; set;}
-        public required string Cliente_Email {get; set;}
-
+        public required string Cliente_Nome { get; set; }
+        public required string Cliente_CPF { get; set; }
+        public required string Cliente_Telefone { get; set; }
+        public required string Cliente_Email { get; set; }
+        public required string Cliente_Endereco { get; set; }
         public required bool Cliente_Ativo { get; set; }
 
-        
-        
+
+
 
 
 

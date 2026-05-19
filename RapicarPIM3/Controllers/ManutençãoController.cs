@@ -85,7 +85,7 @@ public class ManutencaoController : ControllerBase
         var manutencao = await _context.Manutencao.FindAsync(id);
         if (manutencao == null)
         {
-            return NotFound(new { mensagem = "manutencao não encontrado" });
+            return NotFound(new { mensagem = "Manutenção não encontrada" });
 
         }
         manutencao.Manutencao_Ativo = false;

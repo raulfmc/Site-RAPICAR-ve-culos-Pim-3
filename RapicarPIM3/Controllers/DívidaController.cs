@@ -65,7 +65,7 @@ public class DividaController : ControllerBase
         var DividaExistente = await _context.Divida.FindAsync(id);
         if (DividaExistente == null)
         {
-            return NotFound(new { mensagem = "Divida não encontrada" });
+            return NotFound(new { mensagem = "Dívida não encontrada" });
 
         }
 
@@ -74,7 +74,7 @@ public class DividaController : ControllerBase
         {
             DividaExistente.Valor_Divida = Dividas.Valor_Divida;
         }
-        DividaExistente.Descrição_Erro = Dividas.Descrição_Erro;
+        DividaExistente.Descricao_Erro = Dividas.Descricao_Erro;
 
         _context.Divida.Update(DividaExistente);
         await _context.SaveChangesAsync();

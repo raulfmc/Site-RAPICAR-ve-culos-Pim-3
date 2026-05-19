@@ -1,12 +1,29 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Lista de clientes (mock compatível com pim3.js)
-  const listaClientesGlobal = [
-    { id: 1, nome: 'João Silva' },
-    { id: 2, nome: 'Maria Santos' },
-    { id: 3, nome: 'Pedro Oliveira' },
-    { id: 4, nome: 'Ana Costa' },
-    { id: 5, nome: 'Carlos Souza' }
-  ];
+document.addEventListener('DOMContentLoaded', async () => {
+  await carregarClientes();
+  await carregarDividas();
+  async function carregarClientes() {
+
+    const resposta = await fetch('http://localhost:5067/api/Cliente');
+
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
+
+    // Converte o JSON recebido em array JavaScript
+    listaClientesGlobal = await resposta.json();
+  }
+  async function carregarDividas() {
+
+    const resposta = await fetch('http://localhost:5067/api/Divida');
+
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
+
+
+    listaDividasGlobal = await resposta.json();
+  }
+
 
   const STORAGE_KEY = 'rapicar_pendencias_v1';
 
@@ -26,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function contarDividas(clienteId, estado) {
-    return (estado.dividas || []).filter(d => d.clienteId === clienteId);
+    return (listaDividasGlobal || []).filter(d => d.cliente_ID === clienteId);
   }
 
   function calcularStatusFinanceiro(clienteId, estado) {
@@ -50,13 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filtrados = listaClientesGlobal.filter(c => {
       if (!termo) return true;
-      return c.nome.toLowerCase().includes(termo) || String(c.id).includes(termo);
+      return c.cliente_Nome.toLowerCase().includes(termo) || String(c.cliente_ID).includes(termo);
     });
 
     corpoStatusClientes.innerHTML = '';
 
     filtrados.forEach(c => {
-      const statusDevendo = calcularStatusFinanceiro(c.id, estado);
+      const statusDevendo = calcularStatusFinanceiro(c.cliente_ID, estado);
       const emDia = !statusDevendo;
 
       const statusLabel = emDia ? 'Em dia' : 'Devendo';
@@ -67,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.style.cursor = 'pointer';
       tr.style.transition = 'background-color 0.3s ease';
       tr.innerHTML = `
-        <td class="texto">${c.id}</td>
-        <td class="texto">${c.nome}</td>
+        <td class="texto">${c.cliente_ID}</td>
+        <td class="texto">${c.cliente_Nome}</td>
         <td>
           <span style="display:inline-block; padding:10px 18px; border-radius:12px; font-family:Poppins, sans-serif; font-weight:600; background:${statusColor}; color:#fff; box-shadow: 0 0 0 3px ${emDia ? 'rgba(34,197,94,0.25)' : 'rgba(239,68,68,0.25)'};">
             ${statusLabel}
@@ -77,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       tr.addEventListener('click', () => {
-        tituloDividas.textContent = `Dívidas do cliente: ${c.nome}`;
-        renderizarDividas(c.id);
+        tituloDividas.textContent = `Dívidas do cliente: ${c.cliente_Nome}`;
+        renderizarDividas(c.cliente_ID);
       });
 
       corpoStatusClientes.appendChild(tr);
@@ -113,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       corpoDividas.insertAdjacentHTML('beforeend', `
         <tr>
-          <td class="texto">R$ ${Number(d.valor || 0).toFixed(2)}</td>
+          <td class="texto">R$ ${Number(d.valor_Divida || 0).toFixed(2)}</td>
           <td class="texto">${d.dataCriacao || ''}</td>
           <td class="texto">${d.primeiroDia || ''}</td>
           <td class="texto">${d.ultimoDia || ''}</td>
@@ -129,5 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderizarClientes();
+  renderizarDividas();
 });
 
+let listaClientesGlobal = [];
+let listaDividasGlobal = [];

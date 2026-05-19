@@ -15,5 +15,6 @@ namespace RapicarPIM3.Data
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Divida> Divida { get; set; }
         public DbSet<Manutencao> Manutencao { get; set; }
+        public DbSet<Aluguel> Aluguel { get; set; }
     }
 }

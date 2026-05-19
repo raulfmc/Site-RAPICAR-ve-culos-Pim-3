@@ -53,10 +53,10 @@ public class ClienteController : ControllerBase
         }
         
         ClienteExistente.Cliente_Nome = Clientes.Cliente_Nome;
-        ClienteExistente.Cliente_RG = Clientes.Cliente_RG;
+        ClienteExistente.Cliente_CPF = Clientes.Cliente_CPF;
         ClienteExistente.Cliente_Telefone = Clientes.Cliente_Telefone;
         ClienteExistente.Cliente_Email = Clientes.Cliente_Email;     
-        
+        ClienteExistente.Cliente_Endereco = Clientes.Cliente_Endereco;   
 
 
         _context.Cliente.Update(ClienteExistente);
@@ -70,7 +70,7 @@ public class ClienteController : ControllerBase
         var cliente = await _context.Cliente.FindAsync(id);
         if (cliente == null)
         {
-            return NotFound(new { mensagem = "cliente não encontrado" });
+            return NotFound(new { mensagem = "Cliente não encontrado" });
 
         }
         cliente.Cliente_Ativo = false;

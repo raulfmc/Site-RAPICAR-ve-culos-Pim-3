@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>AUTO LOCADORA RAPICAR</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="CadastroDivida.css">
+</head>
+
+<body>
+    <header>
+        <div class="titulo">
+            <h1> BEM VINDO A RAPICAR VEICULOS </h1>
+        </div>
+    </header>
+    <br>
+    <br>
+    <br>
+    <section class="login">
+        <div class="texto">
+            <h2>Cadastro de Dívida</h2>
+        </div>
+        <div class="texto">Tipo Erro</div>
+        <div class="campoDeEscrita"><input type="text" id="Tipo_Erro" class="campoDeEscrita"></div>
+        <br>
+        <div class="texto">Valor dívida</div>
+        <div class="campoDeEscrita"><input type="text" id="Valor_Divida" class="campoDeEscrita"></div>
+        <br>
+        <div class="texto">Descrição do Erro</div>
+        <div class="campoDeEscrita"><textarea id="Descricao_Erro"></textarea></div>
+        <br>
+        <div class="texto">ID do cliente</div>
+        <div class="campoDeEscrita"><input type="text" id="Cliente_ID" class="campoDeEscrita"></div>
+        <div><button class="botao" type="button" onclick = criarDivida()>Cadastrar</button></div>
+        <script src="CadastroDivida.js"></script>
+        <br>
+        <br>
+    </section>
+
+
+    <div id="error-modal" class="modal-erro">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Erro de Validação</h3>
+            <p>Preencha todos os campos obrigatórios!</p>
+        </div>
+    </div>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnSubmit = document.querySelector('.botao[type="button"]');
+            const inputs = document.querySelectorAll('.campoDeEscrita input');
+            const modal = document.getElementById('error-modal');
+            const closeBtn = document.querySelector('.close');
+
+            btnSubmit.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                let hasEmpty = false;
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        hasEmpty = true;
+                        input.style.borderColor = 'rgb(255, 100, 100)';
+                        input.style.boxShadow = '0 0 0 3px rgba(255, 100, 100, 0.3)';
+                    } else {
+                        input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                        input.style.boxShadow = 'none';
+                    }
+                });
+
+                if (hasEmpty) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    alert('Cadastro realizado com sucesso!');
+
+                    window.location.href = "pim3.html";
+                }
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            window.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script> -->
+</body>
+        
+        
+
+<!-- <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Dívida</title>
+</head>
+<body>
+
+    <h2>Cadastrar Dívida</h2>
+
+    <label>Tipo do Erro:</label>
+    <input type="text" id="Tipo_Erro"><br><br>
+
+    <label>Valor da Dívida:</label>
+    <input type="number" id="Valor_Divida" step="0.01"><br><br>
+
+    <label>Descrição:</label>
+    <textarea id="Descricao_Erro"></textarea><br><br>
+
+    <label>ID do Cliente:</label>
+    <input type="number" id="Cliente_ID"><br><br>
+
+    <button onclick="criarDivida()">Salvar Dívida</button>
+
+    <script src="script.js"></script>
+</body>
+</html> -->
