@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RapicarPIM3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7af52aa92b3b07f8444f36705ba4bffea72394b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aaa2edfde7e802366937092fead5f6f990115492")]
 [assembly: System.Reflection.AssemblyProductAttribute("RapicarPIM3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RapicarPIM3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

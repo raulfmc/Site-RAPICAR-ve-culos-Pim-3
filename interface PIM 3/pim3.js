@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
 
             tr.addEventListener('click', () => {
+                clienteSelecionado = cliente;
                 containerSelecaoCliente.innerHTML =
                     `<span class="texto">${idNome}</span>`;
 
@@ -95,8 +96,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
 
             tr.querySelector('.botao-carro').addEventListener('click', () => {
-
+                carroSelecionado = carro;
                 containerSelecaoCarro.innerHTML =
+                
                     `<span class="texto">
                         ${carro.carro_Marca} ${carro.carro_Modelo} - ${carro.carro_Placa}
                     </span>`;
@@ -131,6 +133,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 let listaClientesGlobal = [];
 let listaCarrosGlobal = [];
+let clienteSelecionado = null;
+let carroSelecionado = null;
  // Elementos do cliente
     const btnAbrirLista = document.getElementById('btn-abrir-lista');
     const secaoClientes = document.getElementById('secao-clientes');
