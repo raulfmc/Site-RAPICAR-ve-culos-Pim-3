@@ -25,22 +25,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
 
-  const STORAGE_KEY = 'rapicar_pendencias_v1';
-
+  
   const inputBusca = document.getElementById('input-busca-status');
   const corpoStatusClientes = document.getElementById('corpo-status-clientes');
   const corpoDividas = document.getElementById('corpo-dividas');
   const tituloDividas = document.getElementById('titulo-dividas');
-
-  function carregarEstado() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return { clientes: {}, alugueis: [], dividas: [] };
-      return JSON.parse(raw);
-    } catch (e) {
-      return { clientes: {}, alugueis: [], dividas: [] };
-    }
-  }
 
   function contarDividas(clienteId, estado) {
     return (listaDividasGlobal || []).filter(d => d.cliente_ID === clienteId);

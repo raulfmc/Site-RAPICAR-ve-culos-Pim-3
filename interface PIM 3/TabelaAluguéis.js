@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (
             dados.Aluguel_Data_Inicio === null ||
             dados.Aluguel_Data_Fim === null
-           
+
         ) {
             return;
         }
@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            
+
         });
 
         if (resposta.ok) {
             await carregarAlugueis();
             alert("Aluguel deletado com sucesso!");
-            
+
         } else {
             alert("Erro ao deletar.");
         }
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         botao.style.cursor = 'pointer';
     }
 
-    function renderizarTabelaAluguéis(dados){
+    function renderizarTabelaAluguéis(dados) {
         if (!dados || dados.length === 0) {
             const tr = document.createElement('tr');
             tr.innerHTML = `<td colspan="6" style="text-align:center; padding:20px; color:#fff;">Nenhum aluguel encontrado</td>`;
@@ -121,7 +121,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td class="texto">${aluguel.aluguel_ID}</td>
                 <td class="texto">${new Date(aluguel.aluguel_Data_Inicio).toLocaleDateString('pt-BR')}</td>
                 <td class="texto">${new Date(aluguel.aluguel_Data_Fim).toLocaleDateString('pt-BR')}</td>
-                <td class="texto">${aluguel.aluguel_Valor_Total}</td>
+                <td class="texto">${Number(aluguel.aluguel_Valor_Total).toFixed(2)}</td>
+                <td class="texto">${aluguel.cliente.cliente_Nome}</td>
+                <td class="texto">${aluguel.carro.carro_Marca}</td>
+                <td class="texto">${aluguel.carro.carro_Modelo}</td>
+                <td class="texto">${aluguel.carro.carro_Placa}</td>
                 <td>
                     <button class="botao-editar">Editar</button>
                 </td>
@@ -150,7 +154,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `ID: ${aluguel.aluguel_ID}\n` +
                     `Data início: ${aluguel.aluguel_Data_Inicio}\n` +
                     `Data fim: ${aluguel.aluguel_Data_Fim}\n` +
-                    `Valor total: ${aluguel.aluguel_Valor_Total}\n`
+                    `Valor total: ${aluguel.aluguel_Valor_Total}\n` +
+                    `Nome cliente: ${aluguel.aluguel.cliente.cliente_Nome}\n`
 
                 );
 
@@ -168,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tr.style.backgroundColor = 'transparent';
             });
 
-            
+
 
             corpoTabelaAlugueis.appendChild(tr);
         });
@@ -177,7 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-   
+
 });
 let listaClientesGlobal = [];
 let listaCarrosGlobal = [];

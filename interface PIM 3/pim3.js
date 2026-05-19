@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarTabelaClientes(filtrados);
     });
 
-    // ================= CARROS =================
+    
 
     function renderizarTabelaCarros(dados) {
         corpoTabelaCarros.innerHTML = "";
@@ -129,23 +129,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 });
 
-// ================= GLOBAIS =================
+
 
 let listaClientesGlobal = [];
 let listaCarrosGlobal = [];
 let clienteSelecionado = null;
 let carroSelecionado = null;
- // Elementos do cliente
-    const btnAbrirLista = document.getElementById('btn-abrir-lista');
-    const secaoClientes = document.getElementById('secao-clientes');
-    const containerSelecaoCliente = document.getElementById('container-selecao-cliente');
-    const inputBuscaCliente = document.getElementById('input-busca-cliente');
-    const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
 
-    // Elementos do carro
-    const btnAbrirListaCarros = document.getElementById('btn-abrir-lista-carros');
-    const secaoCarros = document.getElementById('secao-carros');
-    const containerSelecaoCarro = document.getElementById('container-selecao-carro');
-    const inputBuscaCarro = document.getElementById('input-busca-carro');
-    const corpoTabelaSelecaoCarros = document.getElementById('corpo-tabela-selecao-carros');
-    const corpoTabelaCarros = document.getElementById('corpo-tabela-carros');
+const btnAbrirLista = document.getElementById('btn-abrir-lista');
+const secaoClientes = document.getElementById('secao-clientes');
+const containerSelecaoCliente = document.getElementById('container-selecao-cliente');
+const inputBuscaCliente = document.getElementById('input-busca-cliente');
+const corpoTabelaClientes = document.getElementById('corpo-tabela-clientes');
+
+const btnAbrirListaCarros = document.getElementById('btn-abrir-lista-carros');
+const secaoCarros = document.getElementById('secao-carros');
+const containerSelecaoCarro = document.getElementById('container-selecao-carro');
+const inputBuscaCarro = document.getElementById('input-busca-carro');
+const corpoTabelaSelecaoCarros = document.getElementById('corpo-tabela-selecao-carros');
+const corpoTabelaCarros = document.getElementById('corpo-tabela-carros');
