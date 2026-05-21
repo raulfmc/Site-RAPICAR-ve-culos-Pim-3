@@ -4,6 +4,7 @@ async function criarDivida() {
         Valor_Divida: parseFloat(document.getElementById("Valor_Divida").value),
         Descricao_Erro: document.getElementById("Descricao_Erro").value,
         Cliente_ID: parseInt(document.getElementById("Cliente_ID").value),
+        Aluguel_ID: parseInt(document.getElementById("Aluguel_ID").value),
         Divida_Ativo: true
     };
 

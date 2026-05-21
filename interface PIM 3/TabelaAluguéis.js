@@ -39,10 +39,67 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarTabelaAluguéis(listaAlugueisGlobal);
     }
     async function atualizarAluguel(aluguel) {
+        const novaDataInicio = prompt(
+            "Nova data início:",
+            aluguel.aluguel_Data_Inicio.slice(0, 10)
+        );
+
+        const novaDataFim = prompt(
+            "Nova data fim:",
+            aluguel.aluguel_Data_Fim.slice(0, 10)
+        );
+
+        const novoClienteId = Number(
+            prompt("Novo ID do cliente:", aluguel.cliente_ID)
+        );
+
+        const novoCarroId = Number(
+            prompt("Novo ID do carro:", aluguel.carro_ID)
+        );
+
+        if (
+            novaDataInicio === null ||
+            novaDataFim === null ||
+            isNaN(novoClienteId) ||
+            isNaN(novoCarroId)
+        ) {
+            return;
+        }
+
+        // Busca o carro selecionado para obter a diária atual
+        const carroSelecionado = listaCarrosGlobal.find(
+            c => c.carro_ID === novoCarroId
+        );
+
+        if (!carroSelecionado) {
+            alert("Carro não encontrado.");
+            return;
+        }
+        console.log(carroSelecionado);
+
+        // Calcula quantidade de dias
+        const inicio = new Date(novaDataInicio);
+        const fim = new Date(novaDataFim);
+
+        const diferencaMs = fim - inicio;
+        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
+
+        if (dias <= 0) {
+            alert("A data final deve ser maior ou igual à data inicial.");
+            return;
+        }
+
+        
+        const diaria = Number(carroSelecionado.carro_Valor_Diária || 0);
+        const valorTotal = dias * diaria;
+
         const dados = {
             Aluguel_ID: aluguel.aluguel_ID,
-            Aluguel_Data_Inicio: prompt("Novo nome:", aluguel.aluguel_Nome),
-            Aluguel_Data_Fim: prompt("Novo CPF:", aluguel.aluguel_CPF),
+            Aluguel_Data_Inicio: novaDataInicio,
+            Aluguel_Data_Fim: novaDataFim,
+            Aluguel_Valor_Total: valorTotal,
+            Cliente_ID: novoClienteId,
+            Carro_ID: novoCarroId,
             Aluguel_Ativo: aluguel.aluguel_Ativo
         };
         if (
@@ -52,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ) {
             return;
         }
-        console.log(JSON.stringify(dados, null, 2));
+        
         const resposta = await fetch(`http://localhost:5067/api/Aluguel/${aluguel.aluguel_ID}`, {
             method: "PUT",
             headers: {
@@ -103,6 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderizarTabelaAluguéis(dados) {
+        corpoTabelaAlugueis.innerHTML = '';
         if (!dados || dados.length === 0) {
             const tr = document.createElement('tr');
             tr.innerHTML = `<td colspan="6" style="text-align:center; padding:20px; color:#fff;">Nenhum aluguel encontrado</td>`;
@@ -155,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `Data início: ${aluguel.aluguel_Data_Inicio}\n` +
                     `Data fim: ${aluguel.aluguel_Data_Fim}\n` +
                     `Valor total: ${aluguel.aluguel_Valor_Total}\n` +
-                    `Nome cliente: ${aluguel.aluguel.cliente.cliente_Nome}\n`
+                    `Nome cliente: ${aluguel.cliente.cliente_Nome}\n`
 
                 );
 
@@ -178,7 +236,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             corpoTabelaAlugueis.appendChild(tr);
         });
     }
-
 
 
 

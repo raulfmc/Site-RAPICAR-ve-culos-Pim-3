@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await carregarClientes();
 
     renderizarTabelaCarros(listaCarrosGlobal);
-
+    const inputDataInicio = document.getElementById('Aluguel_Data_Inicio');
+    const inputDataFim = document.getElementById('Aluguel_Data_Fim');
+    const divValorTotal = document.getElementById('Aluguel_Valor_Total');
+    inputDataFim.addEventListener('change', calcularValorTotalAluguel);
     async function carregarCarros() {
         try {
             const resposta = await fetch('http://localhost:5067/api/Carro');
@@ -75,8 +78,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         renderizarTabelaClientes(filtrados);
     });
+    function calcularValorTotalAluguel() {
+        // Se ainda não escolheu carro ou datas, não calcula
+        if (!carroSelecionado) return;
+        let valorTotalAluguel = 0;
+        const dataInicio = inputDataInicio.value;
+        const dataFim = inputDataFim.value;
 
-    
+        if (!dataInicio || !dataFim) return;
+
+        const inicio = new Date(dataInicio);
+        const fim = new Date(dataFim);
+
+        // Diferença em dias (incluindo o primeiro dia)
+        const diferencaMs = fim - inicio;
+        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24)) + 1;
+        // Se a data final for menor que a inicial
+        if (dias <= 0) {
+            divValorTotal.textContent = 'Valor total: R$ 0,00';
+            valorTotalAluguel = 0;
+            return;
+        }
+
+        const diaria = Number(carroSelecionado.carro_Valor_Diária || 0);
+
+        valorTotalAluguel = dias * diaria;
+
+        divValorTotal.textContent =
+            `Valor total: R$ ${valorTotalAluguel.toFixed(2).replace('.', ',')}`;
+    }
+
 
     function renderizarTabelaCarros(dados) {
         corpoTabelaCarros.innerHTML = "";
@@ -98,14 +129,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             tr.querySelector('.botao-carro').addEventListener('click', () => {
                 carroSelecionado = carro;
                 containerSelecaoCarro.innerHTML =
-                
+
                     `<span class="texto">
                         ${carro.carro_Marca} ${carro.carro_Modelo} - ${carro.carro_Placa}
                     </span>`;
 
                 secaoCarros.style.display = 'none';
-            });
+                calcularValorTotalAluguel();
 
+            });
+            
             corpoTabelaCarros.appendChild(tr);
         });
     }
@@ -135,6 +168,7 @@ let listaClientesGlobal = [];
 let listaCarrosGlobal = [];
 let clienteSelecionado = null;
 let carroSelecionado = null;
+
 
 const btnAbrirLista = document.getElementById('btn-abrir-lista');
 const secaoClientes = document.getElementById('secao-clientes');

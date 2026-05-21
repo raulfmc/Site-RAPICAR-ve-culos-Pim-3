@@ -73,6 +73,7 @@ public class AluguelController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Atualizar(int id, Aluguel Alugueis)
     {
+
         var AluguelExistente = await _context.Aluguel.FindAsync(id);
         if (AluguelExistente == null)
         {
@@ -80,9 +81,12 @@ public class AluguelController : ControllerBase
 
         }
 
-        AluguelExistente.Aluguel_Valor_Total = Alugueis.Aluguel_Valor_Total;
+        
         AluguelExistente.Aluguel_Data_Inicio = Alugueis.Aluguel_Data_Inicio;
         AluguelExistente.Aluguel_Data_Fim = Alugueis.Aluguel_Data_Fim;
+        AluguelExistente.Cliente_ID = Alugueis.Cliente_ID;
+        AluguelExistente.Carro_ID = Alugueis.Carro_ID;
+        AluguelExistente.Aluguel_Valor_Total = Alugueis.Aluguel_Valor_Total;
 
         _context.Aluguel.Update(AluguelExistente);
         await _context.SaveChangesAsync();
@@ -103,7 +107,7 @@ public class AluguelController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(Aluguel);
     }
-    
+
 
 
 }

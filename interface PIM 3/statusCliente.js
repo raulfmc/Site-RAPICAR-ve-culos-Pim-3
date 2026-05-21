@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   await carregarClientes();
   await carregarDividas();
+  await carregarAlugueis();
   async function carregarClientes() {
 
     const resposta = await fetch('http://localhost:5067/api/Cliente');
@@ -23,35 +24,51 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     listaDividasGlobal = await resposta.json();
   }
+  async function carregarAlugueis() {
+
+    const resposta = await fetch('http://localhost:5067/api/Aluguel');
+
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
 
 
-  
+    listaAlugueisGlobal = await resposta.json();
+
+  }
+
+
   const inputBusca = document.getElementById('input-busca-status');
   const corpoStatusClientes = document.getElementById('corpo-status-clientes');
   const corpoDividas = document.getElementById('corpo-dividas');
   const tituloDividas = document.getElementById('titulo-dividas');
 
-  function contarDividas(clienteId, estado) {
+  function contarDividas(clienteId) {
     return (listaDividasGlobal || []).filter(d => d.cliente_ID === clienteId);
   }
 
-  function calcularStatusFinanceiro(clienteId, estado) {
-    const dividas = contarDividas(clienteId, estado);
-    // Regra: se existir ao menos uma dívida cujo ultimoDia já passou => Devendo.
-    // Caso contrário => Em dia.
+  function calcularStatusFinanceiro(clienteId) {
     const hoje = new Date().toISOString().slice(0, 10);
 
-    const devendo = (dividas || []).some(d => {
-      if (!d.ultimoDia) return true;
-      return String(d.ultimoDia) < hoje;
+    const alugueisCliente = listaAlugueisGlobal.filter(a =>
+        a.cliente_ID === clienteId
+    );
+    
+    const devendo = alugueisCliente.some(a => {
+        if (!a.aluguel_Data_Fim) return false;
+
+        const dataFim = String(a.aluguel_Data_Fim).slice(0, 10);
+        return dataFim < hoje;
     });
 
-    return devendo;
+    return devendo
+        ? { label: "Devendo", color: "#ef4444" }
+        : { label: "Em dia", color: "#22c55e" };
   }
 
 
   function renderizarClientes() {
-    const estado = carregarEstado();
+    
     const termo = (inputBusca.value || '').toLowerCase();
 
     const filtrados = listaClientesGlobal.filter(c => {
@@ -62,11 +79,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     corpoStatusClientes.innerHTML = '';
 
     filtrados.forEach(c => {
-      const statusDevendo = calcularStatusFinanceiro(c.cliente_ID, estado);
-      const emDia = !statusDevendo;
+      const status = calcularStatusFinanceiro(c.cliente_ID);
+     
 
-      const statusLabel = emDia ? 'Em dia' : 'Devendo';
-      const statusColor = emDia ? '#22c55e' : '#ef4444';
+      const statusLabel = status.label;
+      const statusColor = status.color;
+      const emDia = statusLabel === 'Em dia';
 
       const tr = document.createElement('tr');
       tr.className = 'linha-cliente';
@@ -98,8 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function renderizarDividas(clienteId) {
-    const estado = carregarEstado();
-    const dividas = contarDividas(clienteId, estado);
+   
+    const dividas = contarDividas(clienteId);
 
     if (!dividas || dividas.length === 0) {
       corpoDividas.innerHTML = `
@@ -111,8 +129,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     corpoDividas.innerHTML = '';
-
+    
     dividas.forEach(d => {
+      const aluguel = listaAlugueisGlobal.find(
+            a => a.aluguel_ID === d.aluguel_ID
+        );
       const atrasoTexto = (d.atrasoDias || 0) > 0
         ? `${d.atrasoDias} dia(s) de atraso`
         : 'Dentro do prazo';
@@ -121,8 +142,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         <tr>
           <td class="texto">R$ ${Number(d.valor_Divida || 0).toFixed(2)}</td>
           <td class="texto">${d.dataCriacao || ''}</td>
-          <td class="texto">${d.primeiroDia || ''}</td>
-          <td class="texto">${d.ultimoDia || ''}</td>
+          <td class="texto">${new Date(aluguel.aluguel_Data_Inicio).toLocaleDateString('pt-BR')}</td>
+          <td class="texto">${new Date(aluguel.aluguel_Data_Fim).toLocaleDateString('pt-BR')}</td>
           <td class="texto">${atrasoTexto}</td>
           <td class="texto">${d.status || 'Devendo'}</td>
         </tr>
@@ -140,3 +161,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 let listaClientesGlobal = [];
 let listaDividasGlobal = [];
+let listaAlugueisGlobal = [];
