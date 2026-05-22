@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw new Error(`Erro HTTP: ${resposta.status}`);
     }
 
-    // Converte o JSON recebido em array JavaScript
-    listaCarrosGlobal = await resposta.json();
 
+    listaCarrosGlobal = await resposta.json();
+  
     console.log('Carros recebidos da API:', listaCarrosGlobal);
 
     // Exibe os carros na tabela
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (resposta.ok) {
       await carregarCarros();
       alert("Carro atualizado com sucesso!");
-      
+
     } else {
       alert("Erro ao atualizar.");
     }
@@ -57,13 +57,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       headers: {
         "Content-Type": "application/json"
       },
-      
+
     });
 
     if (resposta.ok) {
       await carregarCarros();
       alert("Carro deletado com sucesso!");
-      
+
     } else {
       alert("Erro ao deletar.");
     }
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // Inicializa a tabela
- 
+
 
   function renderizarTabelaCarros(dados) {
     corpoTabelaCarros.innerHTML = '';
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         deletarCarro(carro.carro_ID);
-        
+
       });
       // Botão liga/desliga disponibilidade (verde/vermelho)
       const btnToggle = tr.querySelector('.toggle-disponibilidade');
@@ -241,4 +241,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabelaCarros(filtrados);
   });
 });
-let listaCarrosGlobal = [];
+let listaCarrosGlobal = [
+  
+];

@@ -64,9 +64,10 @@ header:hover {
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   padding: 30px;
-  width: clamp(300px, 90vw, 1000px);
+  width: clamp(300px, 90vw, 1500px);
   max-width: 90vw;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow-x: auto;
 }
 
 .tabela-container:hover {
@@ -98,6 +99,7 @@ header:hover {
 /* Estilo da tabela */
 .tabela {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   background: rgb(81, 104, 253);
   border-radius: 15px;

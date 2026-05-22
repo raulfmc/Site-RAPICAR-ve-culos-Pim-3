@@ -20,7 +20,7 @@ public class CarroController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTodos()
     {
-        var carros = await _context.Carro.ToListAsync();
+        var carros = await _context.Carro.Where(c=> c.Carro_Ativo).ToListAsync();
         return Ok(carros);
     }
     [HttpGet("{id}")]

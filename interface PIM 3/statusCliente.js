@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw new Error(`Erro HTTP: ${resposta.status}`);
     }
 
-    // Converte o JSON recebido em array JavaScript
+    
     listaClientesGlobal = await resposta.json();
   }
   async function carregarDividas() {
@@ -24,7 +24,63 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     listaDividasGlobal = await resposta.json();
   }
+  async function atualizarDivida(divida) {
+        const dados = {
+            Divida_ID: divida.divida_ID,
+            Tipo_Erro: prompt("Novo nome:", divida.tipo_Erro),
+            Valor_Divida: prompt("Novo CPF:", divida.valor_Divida),
+            Descricao_Erro: prompt("Novo telefone:", divida.descricao_Erro),
+            Cliente_ID: prompt("Novo ID do cliente:", divida.cliente_ID),
+          
+        };
+        if (
+            dados.Tipo_Erro === null ||
+            dados.Valor_Divida === null ||
+            dados.Descricao_Erro === null ||
+            dados.Cliente_ID === null 
+            
+        ) {
+            return;
+        }
+        console.log(JSON.stringify(dados, null, 2));
+        const resposta = await fetch(`http://localhost:5067/api/Divida/${divida.divida_ID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        });
 
+        if (resposta.ok) {
+            await carregarDividas();
+            alert("Dívida atualizada com sucesso!");
+            
+        } else {
+            const erro = await resposta.text();
+            console.error("Erro da API:", erro);
+            alert("Erro ao atualizar. Veja o console (F12).");
+        }
+        
+    }
+
+    async function deletarDivida(id) {
+        const resposta = await fetch(`http://localhost:5067/api/Divida/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            
+        });
+
+        if (resposta.ok) {
+            await carregarDividas();
+            alert("Dívida deletada com sucesso!");
+            
+        } else {
+            alert("Erro ao deletar.");
+        }
+
+    }
 
 
   const inputBusca = document.getElementById('input-busca-status');
@@ -98,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function renderizarDividas(clienteId) {
-
+    corpoDividas.innerHTML = '';
     const dividas = contarDividas(clienteId);
 
     if (!dividas || dividas.length === 0) {
@@ -109,14 +165,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       return;
     }
-    const tr = document.createElement('tr');
+    
+
+    dividas.forEach(d => {
+      const tr = document.createElement('tr');
       tr.className = 'linha-carro';
       tr.style.cursor = 'pointer';
       tr.style.transition = 'background-color 0.3s ease';
       tr.innerHTML = '';
-
-    dividas.forEach(d => {
-      
       
 
       tr.insertAdjacentHTML('beforeend', `
@@ -176,6 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       corpoDividas.appendChild(tr);
     });
+    
   }
 
   if (inputBusca) {

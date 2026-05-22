@@ -20,7 +20,7 @@ public class ClienteController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTodos()
     {
-        var Clientes = await _context.Cliente.ToListAsync();
+        var Clientes = await _context.Cliente.Where(c=> c.Cliente_Ativo).ToListAsync();
         return Ok(Clientes);
     }
     [HttpGet("{id}")]
