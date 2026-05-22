@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   await carregarClientes();
   await carregarDividas();
- 
+
   async function carregarClientes() {
 
     const resposta = await fetch('http://localhost:5067/api/Cliente');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     listaDividasGlobal = await resposta.json();
   }
-  
+
 
 
   const inputBusca = document.getElementById('input-busca-status');
@@ -109,20 +109,72 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       return;
     }
-
-    corpoDividas.innerHTML = '';
+    const tr = document.createElement('tr');
+      tr.className = 'linha-carro';
+      tr.style.cursor = 'pointer';
+      tr.style.transition = 'background-color 0.3s ease';
+      tr.innerHTML = '';
 
     dividas.forEach(d => {
       
-      corpoDividas.insertAdjacentHTML('beforeend', `
+      
+
+      tr.insertAdjacentHTML('beforeend', `
         <tr>
           <td class="texto">R$ ${Number(d.valor_Divida || 0).toFixed(2)}</td>
           <td class="texto">${new Date(d.data_Criacao).toLocaleDateString('pt-BR') || ''}</td>
           <td class="texto">${d.tipo_Erro}</td>
           <td class="texto">${d.descricao_Erro}</td>
           <td class="texto">${d.status || 'Devendo'}</td>
+          <td>
+            <button class="botao-editar">Editar</button>
+          </td>
+          <td>
+            <button class="botao-deletar">X</button>
+          </td>
         </tr>
       `);
+      function aplicarEstiloBotao(botao, cor) {
+        botao.style.backgroundColor = cor;
+        botao.style.color = '#fff';
+        botao.style.border = 'none';
+        botao.style.padding = '10px 18px';
+        botao.style.borderRadius = '12px';
+        botao.style.fontFamily = 'Poppins, sans-serif';
+        botao.style.fontWeight = '600';
+        botao.style.cursor = 'pointer';
+      }
+      const btnEditar = tr.querySelector('.botao-editar');
+      aplicarEstiloBotao(
+        btnEditar,
+        '#3b82f6'
+      );
+
+      btnEditar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        atualizarDivida(d.divida_ID);
+      });
+      const btnDeletar = tr.querySelector('.botao-deletar');
+      aplicarEstiloBotao(btnDeletar, '#ef4444');
+      btnDeletar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const confirmado = confirm(
+          `Deseja realmente excluir a dívida?\n\n` +
+          `ID: ${d.divida_ID}\n` +
+          `Valor: ${d.valor_Divida}\n` +
+          `Data criação: ${d.data_Criacao}\n` +
+          `Tipo erro: ${d.tipo_Erro}` +
+          `Descrição erro: ${d.descricao_Erro}`
+        );
+
+        if (!confirmado) {
+          return;
+        }
+
+        deletarDivida(d.divida_ID);
+
+      });
+      corpoDividas.appendChild(tr);
     });
   }
 
@@ -131,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   renderizarClientes();
-  
+
 });
 
 let listaClientesGlobal = [];

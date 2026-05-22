@@ -53,7 +53,8 @@ public class DividaController : ControllerBase
        
 
         divida.cliente = cliente;
-       
+        divida.Data_Criacao = DateTime.Now;
+        Console.WriteLine(divida.Data_Criacao);
         _context.Divida.Add(divida);
         await _context.SaveChangesAsync();
 

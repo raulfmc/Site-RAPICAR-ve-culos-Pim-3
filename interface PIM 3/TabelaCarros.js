@@ -24,7 +24,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function atualizarCarro(id) {
     const dados = {
       Carro_Marca: prompt("Nova marca:"),
-      Carro_Modelo: prompt("Novo modelo:")
+      Carro_Modelo: prompt("Novo modelo:"),
+      Carro_Ano_Fabricação: prompt("Novo ano de fabricação:"),
+      Carro_Número: prompt("Novo número do chassi:"),
+      Carro_Versão: prompt("Nova versão:"),
+      Carro_Câmbio: prompt("Novo câmbio:"),
+      Carro_Placa: prompt("Nova placa:"),
+      Carro_Cor: prompt("Nova cor:"),
+      Carro_Valor_Diária: prompt("Novo valor da diária:"),
     };
 
     const resposta = await fetch(`http://localhost:5067/api/Carro/${id}`, {
@@ -36,8 +43,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     if (resposta.ok) {
-      alert("Carro atualizado com sucesso!");
       await carregarCarros();
+      alert("Carro atualizado com sucesso!");
+      
     } else {
       alert("Erro ao atualizar.");
     }
@@ -77,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   // Inicializa a tabela
-  renderizarTabelaCarros(listaCarrosGlobal);
+ 
 
   function renderizarTabelaCarros(dados) {
     corpoTabelaCarros.innerHTML = '';
