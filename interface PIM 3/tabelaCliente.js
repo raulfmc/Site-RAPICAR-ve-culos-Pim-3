@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Status: automático com base nas dividas cadastradas no localStorage.
     // Se existir pelo menos 1 dívida para o cliente -> devendo.
-    function calcularStatusFinanceiro(clienteId, estado) {
-        const dividas = (estado.dividas || []).filter(d => d.cliente_ID === clienteId);
+    function calcularStatusFinanceiro(clienteId) {
+        const dividas = (listaDividasGlobal || []).filter(d => d.cliente_ID === clienteId);
         const isDevendo = dividas.length > 0;
         return isDevendo ? { label: 'Devendo', color: '#ef4444' } : { label: 'Em dia', color: '#22c55e' };
     }
@@ -249,3 +249,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabelaClientes(listaClientesGlobal);
 });
 let listaClientesGlobal = [];
+let listaDividasGlobal = [];

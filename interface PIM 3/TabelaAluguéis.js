@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </td>
                 <td>
                     <button class="botao-deletar">X</button>
-                </td>
+                </td> 
                 
             `;
             const btnEditar = tr.querySelector('.botao-editar');
@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const confirmado = confirm(
                     `Deseja realmente excluir o aluguel?\n\n` +
                     `ID: ${aluguel.aluguel_ID}\n` +
-                    `Data início: ${aluguel.aluguel_Data_Inicio}\n` +
-                    `Data fim: ${aluguel.aluguel_Data_Fim}\n` +
+                    `Data início: ${new Date(aluguel.aluguel_Data_Inicio).toLocaleDateString('pt-BR')}\n` +
+                    `Data fim: ${new Date(aluguel.aluguel_Data_Fim).toLocaleDateString('pt-BR')}\n` +
                     `Valor total: ${aluguel.aluguel_Valor_Total}\n` +
                     `Nome cliente: ${aluguel.cliente.cliente_Nome}\n`
 

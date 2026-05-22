@@ -14,7 +14,7 @@ namespace RapicarPIM3.Models
         
         public int Carro_ID { get; set; }
         [ForeignKey("Carro_ID")]
-        public required Carro carro { get; set; }
+        public Carro? carro { get; set; }
 
         public required bool Manutencao_Ativo { get; set; }
 

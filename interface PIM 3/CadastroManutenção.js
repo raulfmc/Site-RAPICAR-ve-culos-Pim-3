@@ -1,16 +1,15 @@
-async function criarDivida() {
+async function criarManutencao() {
     const dados = {
-        Tipo_Erro: document.getElementById("Tipo_Erro").value,
-        Valor_Divida: parseFloat(document.getElementById("Valor_Divida").value),
-        Descricao_Erro: document.getElementById("Descricao_Erro").value,
-        Cliente_ID: parseInt(document.getElementById("Cliente_ID").value),
-        Divida_Ativo: true
+        Descricao_Problema: document.getElementById("Descricao_Problema").value,
+        Data_Prevista_Conclusao: new Date(document.getElementById("Data_Prevista_Conclusao").value),
+        Carro_ID: parseInt(document.getElementById("Carro_ID").value),
+        Manutencao_Ativo: true
     };
 
     
 
     try {
-        const resposta = await fetch("http://localhost:5067/api/Divida", {
+        const resposta = await fetch("http://localhost:5067/api/Manutencao", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,10 +23,10 @@ async function criarDivida() {
         console.log("Resposta:", texto);
 
         if (resposta.ok) {
-            alert("Dívida cadastrada com sucesso!");
+            alert("Manutenção cadastrada com sucesso!");
             
         } else {
-            alert("Erro ao cadastrar dívida.");
+            alert("Erro ao cadastrar manutenção.");
         }
     }
     catch (erro) {

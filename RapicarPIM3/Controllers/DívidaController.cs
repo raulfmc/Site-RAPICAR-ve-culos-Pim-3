@@ -22,7 +22,6 @@ public class DividaController : ControllerBase
     {
         var Dividas = await _context.Divida
         .Include(d => d.cliente)
-        .Include(d => d.aluguel)
         .Where(d => d.Divida_Ativo)
         .ToListAsync();
         
@@ -31,7 +30,7 @@ public class DividaController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPorId(int id)
     {
-        var divida = await _context.Divida.Include(d => d.cliente).Include(d => d.aluguel).FirstOrDefaultAsync(divida => divida.Divida_ID == id);
+        var divida = await _context.Divida.Include(d => d.cliente).FirstOrDefaultAsync(divida => divida.Divida_ID == id);
         if (divida == null)
         {
             return NotFound(new { mensagem = "Dívida não encontrada" });
@@ -46,18 +45,15 @@ public class DividaController : ControllerBase
     public async Task<IActionResult> Criar(Divida divida)
     {
         var cliente = _context.Cliente.Find(divida.Cliente_ID);
-        var aluguel = _context.Aluguel.Find(divida.Aluguel_ID);
+        
         if (cliente == null)
         {
             return NotFound(new { mensagem = "Cliente não encontrado." });
         }
-        if (aluguel == null)
-        {
-            return NotFound(new { mensagem = "Aluguel não encontrado." });
-        }
+       
 
         divida.cliente = cliente;
-        divida.aluguel = aluguel;
+       
         _context.Divida.Add(divida);
         await _context.SaveChangesAsync();
 
@@ -75,7 +71,7 @@ public class DividaController : ControllerBase
 
         DividaExistente.Tipo_Erro = Dividas.Tipo_Erro;
         DividaExistente.Valor_Divida = Dividas.Valor_Divida;
-        DividaExistente.Aluguel_ID = Dividas.Aluguel_ID;
+       
         DividaExistente.Cliente_ID = Dividas.Cliente_ID;
         
 

@@ -7,19 +7,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="statusCliente.css">
-    <script src="statusCliente.js" defer></script>
+    <link rel="stylesheet" href="statusCarro.css">
+    <script src="statusCarro.js" defer></script>
 
 </head>
 <body>
     <header>
-        <div class="titulo"><h1> CONTROLE DE DÍVIDAS - CLIENTES </h1></div>
+        <div class="titulo"><h1> CONTROLE DE MANUTENÇÕES - CARROS </h1></div>
     </header>
 
     <div></div>
 
     <section class="tabela-container" style="max-width: 1100px;">
-        <h2 class="texto">Selecione um cliente</h2>
+        <h2 class="texto">Selecione um carro</h2>
         <input type="text" id="input-busca-status" placeholder="Pesquisar por nome ou ID...">
 
         <table class="tabela">
@@ -30,29 +30,27 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="corpo-status-clientes">
+            <tbody id="corpo-status-carros">
                 <!-- Dados via JS -->
             </tbody>
         </table>
 
         <div style="height: 20px;"></div>
 
-        <h2 class="texto" id="titulo-dividas">Dívidas do cliente</h2>
+        <h2 class="texto" id="titulo-manutencoes">Manutenções do carro</h2>
 
         <table class="tabela">
             <thead>
                 <tr class="texto">
-                    <th>Valor</th>
-                    <th>Data criação</th>
-                    <th>Tipo Erro</th>
-                    <th>Descrição Erro</th>
-                    <th>Status</th>
+                    <th>Descrição problema</th>
+                    
+                    <th>Data prevista de conclusão</th>
                     
                 </tr>
             </thead>
-            <tbody id="corpo-dividas">
+            <tbody id="corpo-manutencoes">
                 <tr>
-                    <td colspan="6" style="text-align:center; padding:20px; color:#fff;">Selecione um cliente acima.</td>
+                    <td colspan="6" style="text-align:center; padding:20px; color:#fff;">Selecione um carro acima.</td>
                 </tr>
             </tbody>
         </table>
@@ -60,7 +58,7 @@
 
     <footer>
         <div class="container_botoes">
-            <button class="botao" onclick="window.location.href='tabelaCliente.html'">Voltar à Tabela de Clientes</button>
+            <button class="botao" onclick="window.location.href='tabelaCarro.html'">Voltar à Tabela de Carros</button>
         </div>
     </footer>
 </body>

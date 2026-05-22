@@ -86,19 +86,7 @@ public class CarroController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(carro);
     }
-    [HttpPatch("{id}/status")]
-    public async Task<IActionResult> AtualizarStatus(int id, [FromBody] bool novo_status)
-    {
-       var carro = await _context.Carro.FindAsync(id);
-       if (carro == null)
-       {
-            return NotFound(new {mensagem = "Carro não encontrado"});
-       }
-       carro.Carro_Status = novo_status;
-       _context.Carro.Update(carro);
-       await _context.SaveChangesAsync();
-       return Ok(carro);
-    }
+    
   
 }
 

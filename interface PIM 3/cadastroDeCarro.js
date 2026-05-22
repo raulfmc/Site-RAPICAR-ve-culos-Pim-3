@@ -5,11 +5,10 @@ async function criarCarro() {
         Carro_Ano_Fabricação: parseInt(document.getElementById("Carro_Ano_Fabricação").value),
         Carro_Número: parseInt(document.getElementById("Carro_Número").value),
         Carro_Versão: document.getElementById("Carro_Versão").value,
-        Carro_Câmbio: document.getElementById("Carro_Cãmbio").value,
+        Carro_Câmbio: document.getElementById("Carro_Câmbio").value,
         Carro_Placa: document.getElementById("Carro_Placa").value,
         Carro_Cor: document.getElementById("Carro_Cor").value,
-        Carro_Status: document.getElementById("Carro_Status").value,
-        Carro_Qtd_Aluguéis: parseInt(document.getElementById("Carro_Qtd_Aluguéis").value),
+        Carro_Status: true,
         Carro_Valor_Diária: parseFloat(document.getElementById("Carro_Valor_Diária").value),
         Carro_Ativo: true
     };
