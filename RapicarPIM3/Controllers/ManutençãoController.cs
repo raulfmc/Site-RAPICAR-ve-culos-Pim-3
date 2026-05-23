@@ -55,7 +55,7 @@ public class ManutencaoController : ControllerBase
             return BadRequest(new { mensagem = "Carro alugado no momento." });
         }
         _context.Manutencao.Add(manutencao);
-        carro.Carro_Status = "Em manutenção";
+        
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetPorId", new { id = manutencao.Manutencao_ID }, manutencao);
