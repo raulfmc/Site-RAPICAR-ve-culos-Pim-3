@@ -11,11 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Carros (mock coerente com pim3.js)
   // Inclui categoria mock para atender o filtro pedido.
   const listaCarrosGlobal = [
-    { id: 1, marca: 'Volkswagen', modelo: 'Gol', cor: 'Preto', placa: 'ABC-1234', diaria: 95, categoria: 'Econômico' },
-    { id: 2, marca: 'Chevrolet', modelo: 'Onix', cor: 'Branco', placa: 'DEF-5678', diaria: 110, categoria: 'Compacto' },
-    { id: 3, marca: 'Ford', modelo: 'Fiesta', cor: 'Prata', placa: 'GHI-9012', diaria: 125, categoria: 'Hatch' },
-    { id: 4, marca: 'Toyota', modelo: 'Corolla', cor: 'Preto', placa: 'JKL-3456', diaria: 145, categoria: 'Sedã' },
-    { id: 5, marca: 'Honda', modelo: 'Civic', cor: 'Vermelho', placa: 'MNO-7891', diaria: 100, categoria: 'Hatch' },
+    { id: 1, marca: 'Volkswagen', modelo: 'Gol', cor: 'Preto', placa: 'ABC-1234', diaria: 599.9},
+    { id: 2, marca: 'Chevrolet', modelo: 'Onix', cor: 'Branco', placa: 'DEF-5678', diaria: 599.9},
+  
   ];
 
   const fmtBRL = (value) => {

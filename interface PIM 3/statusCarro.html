@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <title>AUTO LOCADORA RAPICAR</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="statusCarro.css">
     <script src="statusCarro.js" defer></script>
 
 </head>
+
 <body>
     <header>
-        <div class="titulo"><h1> CONTROLE DE MANUTENÇÕES - CARROS </h1></div>
+        <div class="titulo">
+            <h1> CONTROLE DE MANUTENÇÕES - CARROS </h1>
+        </div>
     </header>
 
     <div></div>
@@ -44,7 +49,7 @@
                 <tr class="texto">
                     <th>ID</th>
                     <th>Descrição problema</th>
-                    
+
                     <th>Data prevista de conclusão</th>
                     <th></th>
                     <th></th>
@@ -63,6 +68,16 @@
             <button class="botao" onclick="window.location.href='tabelaCarro.html'">Voltar à Tabela de Carros</button>
         </div>
     </footer>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
-</html>
 
+</html>

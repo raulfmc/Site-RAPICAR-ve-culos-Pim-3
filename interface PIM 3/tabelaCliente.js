@@ -116,11 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return isDevendo ? { label: 'Devendo', color: '#ef4444' } : { label: 'Em dia', color: '#22c55e' };
     }
 
-    function abrirStatusCliente(clienteId) {
-        // Passa o cliente via sessionStorage (não deixa depender de querystring)
-        sessionStorage.setItem('rapicar_status_cliente_id', String(clienteId));
-        window.location.href = 'statusCliente.html';
-    }
 
     function criarIndicadorStatus({ label, color }) {
         return `
@@ -158,19 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td class="texto">${cliente.cliente_Email}</td>
                 <td class="texto">${cliente.cliente_Endereco}</td>
                 <td>${criarIndicadorStatus(status)}</td>
-                <td>
-                    <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
-                     
-                        <button
-                            type="button"
-                            class="botao-status-cliente"
-                            title="Ver status"
-                            style="padding:10px 14px; border-radius:12px; border:none; cursor:pointer; background:rgba(255,255,255,0.12); color:#fff; font-family:Poppins, sans-serif; font-weight:600;">
-                            Status
-                        </button>
-                       
-                    </div>
-                </td>
+                
                 <td>
                     <button class="botao-editar">Editar</button>
                 </td>
@@ -217,11 +200,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tr.style.backgroundColor = 'transparent';
             });
 
-            const btnStatus = tr.querySelector('.botao-status-cliente');
-            btnStatus.addEventListener('click', (e) => {
-                e.stopPropagation();
-                abrirStatusCliente(cliente.cliente_ID);
-            });
+            
 
             corpoTabelaClientes.appendChild(tr);
         });

@@ -36,7 +36,7 @@
                 <h4 class="texto">Veículo</h4>
             </div>
             <div id="container-selecao-carro">
-                <button  class="botao" id="btn-abrir-lista-carros">Escolher veículo</button>
+                <button class="botao" id="btn-abrir-lista-carros">Escolher veículo</button>
             </div>
             <div>
 
@@ -44,23 +44,29 @@
                 <div class="campoDeEscrita" style="gap:8px; margin-top: 10px;">
 
                     <h4 class="texto" style="font-size: 0.9rem;">Primeiro dia do aluguel</h4>
-                    <input type="date" id="Aluguel_Data_Inicio" style="width: 100%; padding: 10px; border-radius: 12px; border: 2px solid rgba(66, 128, 210, 0.5); font-family: 'Poppins', sans-serif;" required />
+                    <input type="date" id="Aluguel_Data_Inicio"
+                        style="width: 100%; padding: 10px; border-radius: 12px; border: 2px solid rgba(66, 128, 210, 0.5); font-family: 'Poppins', sans-serif;"
+                        required />
 
                     <h4 class="texto" style="font-size: 0.9rem;">Último dia do aluguel</h4>
-                    <input type="date" id="Aluguel_Data_Fim" style="width: 100%; padding: 10px; border-radius: 12px; border: 2px solid rgba(66, 128, 210, 0.5); font-family: 'Poppins', sans-serif;" required />
+                    <input type="date" id="Aluguel_Data_Fim"
+                        style="width: 100%; padding: 10px; border-radius: 12px; border: 2px solid rgba(66, 128, 210, 0.5); font-family: 'Poppins', sans-serif;"
+                        required />
                 </div>
                 <div class="campoDeEscrita" style="gap:8px; margin-top: 10px;">
                     <h4 class="texto" style="font-size: 0.9rem;">Valor total do aluguel</h4>
-                    <div id="Aluguel_Valor_Total" class="texto" style="color: aliceblue; font-size: 1.1rem; font-weight: 600; text-shadow:none;">Valor total: R$0,00</div>
+                    <div id="Aluguel_Valor_Total" class="texto"
+                        style="color: aliceblue; font-size: 1.1rem; font-weight: 600; text-shadow:none;">Valor total:
+                        R$0,00</div>
                 </div>
 
-                <button class="botao" type = "button" id="btn-cotar" onclick = criarAluguel()>Concluir</button> 
+                <button class="botao" type="button" id="btn-cotar" onclick=criarAluguel()>Concluir</button>
                 <script src="CadastroAluguel.js"></script>
             </div>
 
         </aside>
 
-        
+
     </main>
 
     <section id="secao-clientes" style="display: none; padding: 20px;">
@@ -104,27 +110,50 @@
     <footer>
         <div class="container_botões">
 
-            <button class="botao2" onclick="window.location.href='tabelaCliente.html'">
-                Tabela de Clientes
-            </button>
-
-            <button class="botao2" onclick="window.location.href='CadastroCliente.html'">
-                Cadastrar novo Cliente
-            </button>
-
-            <button class="botao2" onclick="window.location.href='CadastroDeCarro.html'">
-                Cadastrar novo Carro
-            </button>
 
             <button class="botao2" onclick="window.location.href='dashboardLucro.html'">
                 Dashboard de Lucro
             </button>
+            <button class="botao2" onclick="window.location.href='CadastroCliente.html'">
+                Cadastrar novo Cliente
+            </button>
+
+            <button class="botao2" onclick="window.location.href='cadastroDeCarro.html'">
+                Cadastrar novo Carro
+            </button>
+            <button class="botao2" onclick="window.location.href='CadastroDivida.html'">
+                Cadastrar nova dívida
+            </button>
+            <button class="botao2" onclick="window.location.href='CadastroManutenção.html'">
+                Cadastrar nova manutenção
+            </button>
+            <button class="botao2" onclick="window.location.href='CadastroDivida.html'">
+                Cadastrar nova dívida
+            </button>
 
             <button class="botao2" onclick="window.location.href='TabelaCarros.html'">
-                Tabela carros
+                Tabela de carros
             </button>
+            <button class="botao2" onclick="window.location.href='tabelaCliente.html'">
+                Tabela de Clientes
+            </button>
+            <button class="botao2" onclick="window.location.href='TabelaAluguéis.html'">
+                Tabela de aluguéis
+            </button>
+            
+
         </div>
     </footer>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 
 </html>

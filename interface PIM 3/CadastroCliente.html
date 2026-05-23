@@ -26,21 +26,21 @@
             <h2>Cadastro de Cliente</h2>
         </div>
         <div class="texto">Nome</div>
-        <div class="campoDeEscrita"><input type="text" name="nome" id = Cliente_Nome class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="nome" id=Cliente_Nome class="campoDeEscrita"></div>
         <br>
         <div class="texto">Telefone</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" id = Cliente_Telefone class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="rg" id=Cliente_Telefone class="campoDeEscrita"></div>
         <br>
         <div class="texto">CPF</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" id = Cliente_CPF class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="rg" id=Cliente_CPF class="campoDeEscrita"></div>
         <br>
         <div class="texto">Endereço</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" id = Cliente_Endereco class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="rg" id=Cliente_Endereco class="campoDeEscrita"></div>
         <br>
         <div class="texto">E-mail</div>
-        <div class="campoDeEscrita"><input type="text" name="rg" id = Cliente_Email class="campoDeEscrita"></div>
+        <div class="campoDeEscrita"><input type="text" name="rg" id=Cliente_Email class="campoDeEscrita"></div>
         <br>
-        <div><button class="botao" type="button" onclick = criarCliente()>Cadastrar</button></div>
+        <div><button class="botao" type="button" onclick=criarCliente()>Cadastrar</button></div>
         <script src="CadastroCliente.js"></script>
         <br>
     </section>
@@ -98,5 +98,15 @@
                 }
             });
         });
+    </script>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
 </body>

@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="tabelaCliente.css">
     <script src="tabelaCliente.js" defer></script>
 </head>
@@ -41,7 +42,7 @@
                 </tr>
             </thead>
             <tbody id="corpo-tabela-clientes">
-                
+
             </tbody>
         </table>
     </section>
@@ -49,9 +50,21 @@
     <footer>
         <div class="container_botoes">
             <button class="botao" onclick="window.location.href='pim3.html'">Voltar ao Início</button>
+            <button class="botao" onclick="window.location.href='statusCliente.html'">
+                Status dos clientes
+            </button>
         </div>
     </footer>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 
 </html>
-

@@ -30,12 +30,13 @@
         <div class="campoDeEscrita"><textarea id="Descricao_Problema"></textarea></div>
         <br>
         <div class="texto">Data prevista de conclusão (YYYY-MM-DD)</div>
-        <div class="campoDeEscrita"><input type="text" id="Data_Prevista_Conclusao" class="campoDeEscrita"></input></div>
+        <div class="campoDeEscrita"><input type="text" id="Data_Prevista_Conclusao" class="campoDeEscrita"></input>
+        </div>
         <br>
         <div class="texto">ID do carro</div>
         <div class="campoDeEscrita"><input id="Carro_ID"></input></div>
         <br>
-        <div><button class="botao" type="button" onclick = criarManutencao()>Cadastrar</button></div>
+        <div><button class="botao" type="button" onclick=criarManutencao()>Cadastrar</button></div>
         <script src="CadastroManutenção.js"></script>
         <br>
         <br>
@@ -50,7 +51,7 @@
         </div>
     </div>
 
-    <!-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const btnSubmit = document.querySelector('.botao[type="button"]');
             const inputs = document.querySelectorAll('.campoDeEscrita input');
@@ -94,7 +95,15 @@
                 }
             });
         });
-    </script> -->
+    </script>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
-        
-        
