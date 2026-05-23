@@ -20,7 +20,7 @@ public class CarroController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTodos()
     {
-        var carros = await _context.Carro.Where(c=> c.Carro_Ativo).ToListAsync();
+        var carros = await _context.Carro.Where(c => c.Carro_Ativo).ToListAsync();
         return Ok(carros);
     }
     [HttpGet("{id}")]
@@ -29,7 +29,7 @@ public class CarroController : ControllerBase
         var carros = await _context.Carro.FindAsync(id);
         if (carros == null)
         {
-            return NotFound(new {mensagem = "Carros não encontrado"});
+            return NotFound(new { mensagem = "Carros não encontrado" });
         }
         return Ok(carros);
     }
@@ -40,7 +40,7 @@ public class CarroController : ControllerBase
         _context.Carro.Add(carros);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetPorId", new {id = carros.Carro_ID}, carros);
+        return CreatedAtAction("GetPorId", new { id = carros.Carro_ID }, carros);
     }
     [HttpPut("{id}")]
     public async Task<IActionResult> Atualizar(int id, Carro Carro)
@@ -48,10 +48,10 @@ public class CarroController : ControllerBase
         var CarroExistente = await _context.Carro.FindAsync(id);
         if (CarroExistente == null)
         {
-            return NotFound(new {mensagem = "Carro não encontrado"});
-            
+            return NotFound(new { mensagem = "Carro não encontrado" });
+
         }
-        
+
         CarroExistente.Carro_Placa = Carro.Carro_Placa;
         CarroExistente.Carro_Marca = Carro.Carro_Marca;
         CarroExistente.Carro_Modelo = Carro.Carro_Modelo;
@@ -59,11 +59,9 @@ public class CarroController : ControllerBase
         CarroExistente.Carro_Cor = Carro.Carro_Cor;
         CarroExistente.Carro_Número = Carro.Carro_Número;
         CarroExistente.Carro_Versão = Carro.Carro_Versão;
-    
         CarroExistente.Carro_Câmbio = Carro.Carro_Câmbio;
-        CarroExistente.Carro_Qtd_Aluguéis = Carro.Carro_Qtd_Aluguéis;
         CarroExistente.Carro_Valor_Diária = Carro.Carro_Valor_Diária;
-        
+
 
 
         _context.Carro.Update(CarroExistente);
@@ -87,6 +85,6 @@ public class CarroController : ControllerBase
         return Ok(carro);
     }
     
-  
+
 }
 

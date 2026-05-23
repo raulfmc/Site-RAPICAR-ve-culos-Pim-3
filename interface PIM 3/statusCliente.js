@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function atualizarDivida(divida) {
         const dados = {
             Divida_ID: divida.divida_ID,
-            Tipo_Erro: prompt("Novo nome:", divida.tipo_Erro),
-            Valor_Divida: prompt("Novo CPF:", divida.valor_Divida),
-            Descricao_Erro: prompt("Novo telefone:", divida.descricao_Erro),
+            Tipo_Erro: prompt("Novo tipo do erro:", divida.tipo_Erro),
+            Valor_Divida: prompt("Novo valor:", divida.valor_Divida),
+            Descricao_Erro: prompt("Nova descrição do erro:", divida.descricao_Erro),
             Cliente_ID: prompt("Novo ID do cliente:", divida.cliente_ID),
-          
+            Divida_Ativo: true
         };
         if (
             dados.Tipo_Erro === null ||
@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (resposta.ok) {
             await carregarDividas();
             alert("Dívida atualizada com sucesso!");
+            await renderizarClientes();
+            await renderizarDividas();
             
         } else {
             const erro = await resposta.text();
@@ -75,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (resposta.ok) {
             await carregarDividas();
             alert("Dívida deletada com sucesso!");
+            await renderizarDividas();
             
         } else {
             alert("Erro ao deletar.");
@@ -208,7 +211,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       btnEditar.addEventListener('click', (e) => {
         e.stopPropagation();
-        atualizarDivida(d.divida_ID);
+        atualizarDivida(d);
       });
       const btnDeletar = tr.querySelector('.botao-deletar');
       aplicarEstiloBotao(btnDeletar, '#ef4444');

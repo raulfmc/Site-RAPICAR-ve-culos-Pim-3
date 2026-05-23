@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     listaCarrosGlobal = await resposta.json();
-  
+
     console.log('Carros recebidos da API:', listaCarrosGlobal);
 
     // Exibe os carros na tabela
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
   }
-  async function atualizarCarro(id) {
+  async function atualizarCarro(carro) {
     const dados = {
       Carro_Marca: prompt("Nova marca:"),
       Carro_Modelo: prompt("Novo modelo:"),
@@ -32,19 +32,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       Carro_Placa: prompt("Nova placa:"),
       Carro_Cor: prompt("Nova cor:"),
       Carro_Valor_Diária: prompt("Novo valor da diária:"),
+      Carro_Ativo: true
     };
 
-    const resposta = await fetch(`http://localhost:5067/api/Carro/${id}`, {
+    const resposta = await fetch(`http://localhost:5067/api/Carro/${carro.carro_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(dados)
     });
+    const texto = await resposta.text();
+
 
     if (resposta.ok) {
       await carregarCarros();
       alert("Carro atualizado com sucesso!");
+      await renderizarTabelaCarros();
 
     } else {
       alert("Erro ao atualizar.");
@@ -60,12 +64,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     });
 
+
     if (resposta.ok) {
       await carregarCarros();
       alert("Carro deletado com sucesso!");
+      await renderizarTabelaCarros();
 
     } else {
-      alert("Erro ao deletar.");
+      const erro = await resposta.text();
+      console.log(erro);
     }
 
   }
@@ -84,7 +91,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-  // Inicializa a tabela
 
 
   function renderizarTabelaCarros(dados) {
@@ -92,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!dados || dados.length === 0) {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="6" style="text-align: center; padding: 20px; color: #fff;">Nenhum carro encontrado</td>`;
+      tr.innerHTML = `<td colspan="6" style="padding: 20px; color: #fff;">Nenhum carro encontrado</td>`;
       corpoTabelaCarros.appendChild(tr);
       return;
     }
@@ -117,12 +123,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         <td class="texto">${carro.carro_Qtd_Aluguéis}</td>
         <td class="texto">R$ ${carro.carro_Valor_Diária}</td>
         <td>
-          <button
-            type="button"
-            class="toggle-disponibilidade"
-            aria-pressed="${carro.carro_Status ? 'true' : 'false'}"
-            title="Alternar disponibilidade"
-          >${carro.carro_Status ? 'Disponível' : 'Indisponível'}</button>
+          <span class="status-carro">
+            ${carro.carro_Status}
+          </span>
         </td>
         <td>
           <button class="botao-editar">Editar</button>
@@ -139,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       btnEditar.addEventListener('click', (e) => {
         e.stopPropagation();
-        atualizarCarro(carro.carro_ID);
+        atualizarCarro(carro);
       });
       const btnDeletar = tr.querySelector('.botao-deletar');
       aplicarEstiloBotao(btnDeletar, '#ef4444');
@@ -160,51 +163,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         deletarCarro(carro.carro_ID);
 
       });
-      // Botão liga/desliga disponibilidade (verde/vermelho)
-      const btnToggle = tr.querySelector('.toggle-disponibilidade');
+      
+      const statusSpan = tr.querySelector('.status-carro');
+      const status = carro.carro_Status;
 
-      function aplicarEstadoDisponibilidade() {
-        const disponivel = carro.carro_Status;
+        let cor = '#22c55e';
 
-        btnToggle.textContent = disponivel ? 'Disponível' : 'Indisponível';
-
-        aplicarEstiloBotao(
-          btnToggle,
-          disponivel ? '#22c55e' : '#ef4444'
-        );
-        btnToggle.textContent = disponivel ? 'Disponível' : 'Indisponível';
-        btnToggle.setAttribute('aria-pressed', disponivel ? 'true' : 'false');
-      }
-
-      aplicarEstadoDisponibilidade();
-
-      btnToggle.addEventListener('click', async (e) => {
-        e.stopPropagation();
-
-        const novoStatus = !carro.carro_Status;
-
-        const resposta = await fetch(
-          `http://localhost:5067/api/Carro/${carro.carro_ID}/status`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(novoStatus)
-          }
-        );
-
-        if (resposta.ok) {
-          carro.carro_Status = novoStatus;
-          aplicarEstadoDisponibilidade();
-        } else {
-          alert('Erro ao atualizar status do carro.');
+        if (status === 'Alugado') {
+          cor = '#f59e0b';
         }
 
+        if (status === 'Em manutenção') {
+          cor = '#ef4444';
+        }
 
-        aplicarEstadoDisponibilidade();
-      });
+        aplicarEstiloBotao(statusSpan, cor);
 
+        statusSpan.textContent = status;
+        
+      
+
+      
 
       tr.addEventListener('mouseenter', () => {
         tr.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
@@ -242,5 +221,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 let listaCarrosGlobal = [
-  
+
 ];

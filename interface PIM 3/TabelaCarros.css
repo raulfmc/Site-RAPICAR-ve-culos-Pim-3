@@ -66,7 +66,7 @@ header:hover {
   max-width: 95vw;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow-x: auto;
-  overflow-y:auto;
+  
 }
 
 .tabela-container:hover {
@@ -74,7 +74,6 @@ header:hover {
   box-shadow: 0 12px 40px rgba(38, 121, 222, 0.4);
 }
 
-/* Input de busca (tabela carros) - igual ao da tabela de clientes */
 #input-busca-carro {
   width: 100%;
   padding: 15px;
@@ -110,6 +109,7 @@ header:hover {
 
 .tabela {
   width: 100%;
+  
   table-layout: auto;
   border-collapse: collapse;
   background: rgb(81, 104, 253);

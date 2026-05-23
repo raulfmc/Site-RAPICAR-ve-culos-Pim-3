@@ -78,18 +78,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(carroSelecionado);
 
         // Calcula quantidade de dias
-        const inicio = new Date(novaDataInicio);
-        const fim = new Date(novaDataFim);
+        const inicio = new Date(novaDataInicio + "T00:00:00");
+        const fim = new Date(novaDataFim + "T00:00:00");
 
         const diferencaMs = fim - inicio;
-        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
+        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24)) + 1;
 
         if (dias <= 0) {
             alert("A data final deve ser maior ou igual à data inicial.");
             return;
         }
 
-        
+
         const diaria = Number(carroSelecionado.carro_Valor_Diária || 0);
         const valorTotal = dias * diaria;
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ) {
             return;
         }
-        
+
         const resposta = await fetch(`http://localhost:5067/api/Aluguel/${aluguel.aluguel_ID}`, {
             method: "PUT",
             headers: {
@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (resposta.ok) {
             await carregarAlugueis();
             alert("Aluguel atualizado com sucesso!");
+            await renderizarTabelaAluguéis();
 
         } else {
             const erro = await resposta.text();
@@ -142,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (resposta.ok) {
             await carregarAlugueis();
             alert("Aluguel deletado com sucesso!");
+            await renderizarTabelaAluguéis();
 
         } else {
             alert("Erro ao deletar.");
@@ -169,6 +171,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         dados.forEach(aluguel => {
+
             const tr = document.createElement('tr');
             tr.className = 'linha-cliente';
             tr.style.transition = 'background-color 0.3s ease';
@@ -198,14 +201,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '#3b82f6'
             );
 
-            btnEditar.addEventListener('click', (e) => {
+            btnEditar.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                atualizarAluguel(aluguel);
-                carregarAlugueis();
+                await atualizarAluguel(aluguel);
+                await carregarAlugueis();
             });
             const btnDeletar = tr.querySelector('.botao-deletar');
             aplicarEstiloBotao(btnDeletar, '#ef4444');
-            btnDeletar.addEventListener('click', (e) => {
+            btnDeletar.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 const confirmado = confirm(
                     `Deseja realmente excluir o aluguel?\n\n` +
@@ -221,7 +224,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
 
-                deletarAluguel(aluguel.aluguel_ID);
+                await deletarAluguel(aluguel.aluguel_ID);
+                await carregarAlugueis();
 
             });
             tr.addEventListener('mouseenter', () => {

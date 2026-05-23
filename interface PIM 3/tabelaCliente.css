@@ -99,7 +99,7 @@ header:hover {
 /* Estilo da tabela */
 .tabela {
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
   border-collapse: collapse;
   background: rgb(81, 104, 253);
   border-radius: 15px;

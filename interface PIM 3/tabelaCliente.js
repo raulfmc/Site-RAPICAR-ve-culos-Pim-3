@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ) {
             return;
         }
-        console.log(JSON.stringify(dados, null, 2));
+        
         const resposta = await fetch(`http://localhost:5067/api/Cliente/${cliente.cliente_ID}`, {
             method: "PUT",
             headers: {
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (resposta.ok) {
             await carregarClientes();
             alert("Cliente atualizado com sucesso!");
+            await renderizarTabelaClientes();
             
         } else {
             const erro = await resposta.text();
@@ -134,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!dados || dados.length === 0) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="6" style="text-align:center; padding:20px; color:#fff;">Nenhum cliente encontrado</td>`;
+            tr.innerHTML = `<td colspan="6" style="padding:20px; color:#fff;">Nenhum cliente encontrado</td>`;
             corpoTabelaClientes.appendChild(tr);
             return;
         }
@@ -184,10 +185,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '#3b82f6'
             );
 
-            btnEditar.addEventListener('click', (e) => {
+            btnEditar.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                atualizarCliente(cliente);
-                carregarClientes();
+                await atualizarCliente(cliente);
+                await carregarClientes();
             });
             const btnDeletar = tr.querySelector('.botao-deletar');
             aplicarEstiloBotao(btnDeletar, '#ef4444');

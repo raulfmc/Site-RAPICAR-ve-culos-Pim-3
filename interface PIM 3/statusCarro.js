@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   async function atualizarManutencao(Manutencao) {
     const dados = {
-      Manutencao_ID: Manutencao.Manutencao_ID,
+      Manutencao_ID: Manutencao.manutencao_ID,
       Descricao_Problema: prompt("Nova descrição do problema:", Manutencao.descricao_Problema),
       Data_Prevista_Conclusao: prompt("Nova data prevista de conclusão:", Manutencao.data_Prevista_Conclusao),
       Carro_ID: prompt("Novo ID do carro:", Manutencao.carro_ID),
-
+      Manutencao_Ativo: true
     };
     if (
       dados.Descricao_Problema === null ||
@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     ) {
       return;
     }
-    console.log(JSON.stringify(dados, null, 2));
-    const resposta = await fetch(`http://localhost:5067/api/Manutencao/${Manutencao.Manutencao_ID}`, {
+    console.log(Manutencao);
+    const resposta = await fetch(`http://localhost:5067/api/Manutencao/${Manutencao.manutencao_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     if (resposta.ok) {
-      await carregarManutencaos();
+      await carregarManutencoes();
       alert("Manutenção atualizada com sucesso!");
-
+      await renderizarManutencoes();
     } else {
       const erro = await resposta.text();
       console.error("Erro da API:", erro);
@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (resposta.ok) {
       await carregarManutencoes();
       alert("Manutenção deletada com sucesso!");
+      await renderizarManutencoes();
 
     } else {
       alert("Erro ao deletar.");
@@ -176,6 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       tr.insertAdjacentHTML('beforeend', `
         <tr>
+          <td class="texto">${m.manutencao_ID}</td>
           <td class="texto">${m.descricao_Problema}</td>
           <td class="texto">${new Date(m.data_Prevista_Conclusao).toLocaleDateString('pt-BR') || ''}</td>
           <td>
@@ -205,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       btnEditar.addEventListener('click', (e) => {
         e.stopPropagation();
-        atualizarDivida(m.manutencao_ID);
+        atualizarManutencao(m);
       });
       const btnDeletar = tr.querySelector('.botao-deletar');
       aplicarEstiloBotao(btnDeletar, '#ef4444');

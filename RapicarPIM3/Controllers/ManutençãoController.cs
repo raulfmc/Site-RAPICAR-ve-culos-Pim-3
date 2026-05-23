@@ -24,9 +24,7 @@ public class ManutencaoController : ControllerBase
         var Manutencoes = await _context.Manutencao
          .Include(manutencao => manutencao.carro)
          .ToListAsync();
-        return Ok(_context.Manutencao
-        .Where(c => c.Manutencao_Ativo)
-        .ToList());
+        return Ok(Manutencoes);
     }
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPorId(int id)
@@ -38,9 +36,7 @@ public class ManutencaoController : ControllerBase
         }
         if (manutencao.Manutencao_Ativo == true)
         {
-            return Ok(_context.Manutencao
-        .Where(c => c.Manutencao_Ativo)
-        .ToList());
+            return Ok(manutencao);
         }
         return NotFound(new { mensagem = "Manutenção não encontrada/inativa" });
     }
@@ -54,8 +50,12 @@ public class ManutencaoController : ControllerBase
         }
 
         manutencao.carro = carro;
-
+        if (carro.Carro_Status == "Alugado")
+        {
+            return BadRequest(new { mensagem = "Carro alugado no momento." });
+        }
         _context.Manutencao.Add(manutencao);
+        carro.Carro_Status = "Em manutenção";
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetPorId", new { id = manutencao.Manutencao_ID }, manutencao);
@@ -72,7 +72,7 @@ public class ManutencaoController : ControllerBase
 
         ManutencaoExistente.Descricao_Problema = manutencao.Descricao_Problema;
         ManutencaoExistente.Data_Prevista_Conclusao = manutencao.Data_Prevista_Conclusao;
-
+        ManutencaoExistente.Carro_ID = manutencao.Carro_ID;
 
         _context.Manutencao.Update(ManutencaoExistente);
         await _context.SaveChangesAsync();

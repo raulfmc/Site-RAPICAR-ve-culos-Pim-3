@@ -87,13 +87,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!dataInicio || !dataFim) return;
 
-        const inicio = new Date(dataInicio);
-        const fim = new Date(dataFim);
+        const inicio = new Date(dataInicio + "T00:00:00");
+        const fim = new Date(dataFim + "T00:00:00");
 
-        // Diferença em dias (incluindo o primeiro dia)
-        const diferencaMs = fim - inicio;
-        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24)) + 1;
-        // Se a data final for menor que a inicial
+
+        const diferencaMs = fim.getTime() - inicio.getTime();
+        const dias = Math.floor(diferencaMs / (1000 * 60 * 60 * 24));
+
         if (dias <= 0) {
             divValorTotal.textContent = 'Valor total: R$ 0,00';
             valorTotalAluguel = 0;
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     function renderizarTabelaCarros(dados) {
-        corpoTabelaCarros.innerHTML = "";
+        corpoTabelaSelecaoCarros.innerHTML = "";
 
         dados.forEach(carro => {
             const tr = document.createElement('tr');
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 calcularValorTotalAluguel();
 
             });
-            
-            corpoTabelaCarros.appendChild(tr);
+
+            corpoTabelaSelecaoCarros.appendChild(tr);
         });
     }
 

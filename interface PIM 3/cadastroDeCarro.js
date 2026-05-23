@@ -8,7 +8,7 @@ async function criarCarro() {
         Carro_Câmbio: document.getElementById("Carro_Câmbio").value,
         Carro_Placa: document.getElementById("Carro_Placa").value,
         Carro_Cor: document.getElementById("Carro_Cor").value,
-        Carro_Status: true,
+        Carro_Status: document.getElementById("Carro_Status").value,
         Carro_Valor_Diária: parseFloat(document.getElementById("Carro_Valor_Diária").value),
         Carro_Ativo: true
     };

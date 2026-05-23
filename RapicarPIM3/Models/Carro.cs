@@ -18,7 +18,7 @@ namespace RapicarPIM3.Models
         public required string Carro_Câmbio { get; set; }
         public required string Carro_Placa { get; set; } 
         public required string Carro_Cor { get; set; }
-        public required bool Carro_Status { get; set; }
+        public string Carro_Status { get; set; } = "Disponível";
         
         public int Carro_Qtd_Aluguéis { get; set; }
         public required double Carro_Valor_Diária { get; set; }

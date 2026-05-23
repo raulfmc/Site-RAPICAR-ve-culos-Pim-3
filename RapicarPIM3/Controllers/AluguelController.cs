@@ -25,9 +25,7 @@ public class AluguelController : ControllerBase
         .Include(Aluguel => Aluguel.cliente)
         .Include(Aluguel => Aluguel.carro)
         .ToListAsync();
-        return Ok(_context.Aluguel
-        .Where(c => c.Aluguel_Ativo)
-        .ToList());
+        return Ok(Alugueis);
     }
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPorId(int id)
@@ -42,9 +40,7 @@ public class AluguelController : ControllerBase
         }
         if (Aluguel.Aluguel_Ativo == true)
         {
-            return Ok(_context.Aluguel
-        .Where(c => c.Aluguel_Ativo)
-        .ToList());
+            return Ok(Aluguel);
         }
         return NotFound(new { mensagem = "Aluguel não encontrado" });
     }
@@ -61,13 +57,17 @@ public class AluguelController : ControllerBase
         {
             return NotFound(new { mensagem = "Carro não encontrado." });
         }
+        
 
         Aluguel.cliente = cliente;
         Aluguel.carro = carro;
-
+        
         _context.Aluguel.Add(Aluguel);
-        await _context.SaveChangesAsync();
 
+        carro.Carro_Qtd_Aluguéis =
+        _context.Aluguel.Count(a => a.Carro_ID == carro.Carro_ID);
+
+        await _context.SaveChangesAsync();
         return CreatedAtAction("GetPorId", new { id = Aluguel.Aluguel_ID }, Aluguel);
     }
     [HttpPut("{id}")]
@@ -81,7 +81,7 @@ public class AluguelController : ControllerBase
 
         }
 
-        
+
         AluguelExistente.Aluguel_Data_Inicio = Alugueis.Aluguel_Data_Inicio;
         AluguelExistente.Aluguel_Data_Fim = Alugueis.Aluguel_Data_Fim;
         AluguelExistente.Cliente_ID = Alugueis.Cliente_ID;
@@ -96,6 +96,7 @@ public class AluguelController : ControllerBase
     public async Task<IActionResult> Deletar(int id)
     {
         var Aluguel = await _context.Aluguel.FindAsync(id);
+       
         if (Aluguel == null)
         {
             return NotFound(new { mensagem = "Aluguel não encontrado" });
@@ -107,7 +108,7 @@ public class AluguelController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(Aluguel);
     }
-
+    
 
 
 }
